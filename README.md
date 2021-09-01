@@ -2,6 +2,8 @@
 
 RISC-V processor & peripherals made (almost) entirely with 74-series TTL logic chips.
 
+This repository contains the KiCAD schematics and PCB drawings of the processor, along with the related software source code.
+
 ## Current Design Goals
 
 * Supports the `RV32IM` instruction set.
