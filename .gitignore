@@ -1,5 +1,8 @@
+*.gbr
+*.drl
 *.debug
 *.sch-bak
 *.kicad_pcb-bak
 *-cache.lib
+.DS_Store
 fp-info-cache
