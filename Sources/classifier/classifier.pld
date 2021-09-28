@@ -1,0 +1,19 @@
+GAL22V10
+22V10
+
+NC  NC  NC  NC  NC  NC  OP6 OP5 OP4 OP3 OP2 GND
+NC  R   I   S   B   U   J   NC  NC  NC  NC  VCC
+
+R = /OP6 *  OP5 *  OP4 * /OP3 * /OP2        ;; R-type instruction
+I =  OP6 *  OP5 *  OP4 * /OP3 * /OP2 +      ;; I-type instruction
+     OP6 *  OP5 * /OP4 * /OP3 *  OP2 +
+    /OP6 * /OP5 * /OP4 *  OP3 *  OP2 +
+    /OP6 * /OP5        * /OP3 * /OP2
+
+S = /OP6 *  OP5 * /OP4 * /OP3 * /OP2        ;; S-type instruction
+B =  OP6 *  OP5 * /OP4 * /OP3 * /OP2        ;; B-type instruction
+U = /OP6        *  OP4 * /OP3 *  OP2        ;; U-type instruction
+J =  OP6 *  OP5 * /OP4 *  OP3 *  OP2        ;; J-type instruction
+
+DESCRIPTION
+Classify instructions into R/I/S/B/U/J-types.
