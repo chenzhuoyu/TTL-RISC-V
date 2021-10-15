@@ -1,0 +1,33 @@
+Generates LOAD, STORE, and BM[3:0] signals, also checks for unaligned access.
+
+device:
+    GAL22V10
+
+pins:
+    GND A1  A0  S1  S0  L1  L0  IF  _   _   _   _
+    _   IO  ST  M3  M2  M1  M0  EX  _   _   _   VCC
+
+define:
+    H  = S1 | L1 | IF & ~(L0 | L1 | S1 | S0)
+    L  = S0 | L0 | IF & ~(L0 | L1 | S1 | S0)
+    IO = S0 | S1 | L0 | L1 | IF
+    ST = S0 | S1
+
+table:
+    A1  A0  H   L  |  M3  M2  M1  M0  EX
+    0   0   0   0  |  0   0   0   0   0
+    0   0   0   1  |  0   0   0   1   0
+    0   0   1   0  |  0   0   1   1   0
+    0   0   1   1  |  1   1   1   1   0
+    0   1   0   0  |  0   0   0   0   0
+    0   1   0   1  |  0   0   1   0   0
+    0   1   1   0  |  0   0   0   0   1
+    0   1   1   1  |  0   0   0   0   1
+    1   0   0   0  |  0   0   0   0   0
+    1   0   0   1  |  0   1   0   0   0
+    1   0   1   0  |  1   1   0   0   0
+    1   0   1   1  |  0   0   0   0   1
+    1   1   0   0  |  0   0   0   0   0
+    1   1   0   1  |  1   0   0   0   0
+    1   1   1   0  |  0   0   0   0   1
+    1   1   1   1  |  0   0   0   0   1

@@ -1,0 +1,57 @@
+GAL22V10
+22V10
+
+NC  NC  NC  NC  NC  A1  A0  W1  W0  R1  R0  GND
+NC  RD  WR  M3  M2  M1  M0  S3  S2  S1  EX  VCC
+
+RD = R0 + R1
+WR = W0 + W1
+
+M3 =  A1 *  A0 * /W1 *  W0 * /R1       +
+      A1 *  A0 * /W1       * /R1 *  R0 +
+      A1 * /A0 *  W1 * /W0       * /R0 +
+      A1 * /A0       * /W0 *  R1 * /R0 +
+     /A1 * /A0 *  W1 *  W0             +
+     /A1 * /A0 *  W1             *  R0 +
+     /A1 * /A0       *  W0 *  R1       +
+     /A1 * /A0             *  R1 *  R0
+
+M2 =  A1 * /A0 * /W1 *  W0 * /R1       +
+      A1 * /A0 * /W1       * /R1 *  R0 +
+      A1 * /A0 *  W1 * /W0       * /R0 +
+      A1 * /A0       * /W0 *  R1 * /R0 +
+     /A1 * /A0 *  W1 *  W0             +
+     /A1 * /A0 *  W1             *  R0 +
+     /A1 * /A0       *  W0 *  R1       +
+     /A1 * /A0             *  R1 *  R0
+
+M1 = /A1 *  A0 * /W1 *  W0 * /R1       +
+     /A1 *  A0 * /W1       * /R1 *  R0 +
+     /A1 * /A0 *  W1                   +
+     /A1 * /A0             *  R1
+
+M0 = /A1 * /A0 *  W1                   +
+     /A1 * /A0       *  W0             +
+     /A1 * /A0             *  R1       +
+     /A1 * /A0                   *  R0
+
+S3 =  A1 *  A0 * /W1       * /R1 *  R0 +
+      A1 *  A0 * /W1 *  W0 * /R1
+
+S2 =  A1 * /A0 *  W1 * /W0       * /R0 +
+      A1 * /A0 * /W1 *  W0 * /R1       +
+      A1 * /A0 * /W1       * /R1 *  R0 +
+      A1 * /A0       * /W0 *  R1 * /R0
+
+S1 = /A1 *  A0 * /W1       * /R1 *  R0 +
+     /A1 *  A0 * /W1 *  W0 * /R1
+
+EX =  A1                   *  R1 *  R0 +
+      A1       *  W1             *  R0 +
+      A1             *  W0 *  R1       +
+      A1       *  W1 *  W0             +
+            A0 *              R1       +
+            A0 *  W1
+
+DESCRIPTION
+Generates LOAD, STORE, and BM[3:0] signals, also checks for unaligned access.

@@ -10,7 +10,7 @@ This repository contains the KiCAD schematics and PCB drawings of the processor,
 * Runs at `16MHz` clock speed.
 * Multi-stage pipeline.
 * Single clock cycle instructions.
-* Supports the 8080 bus interface.
+* Supports the 6800 bus interface (e.g. R/W and STROBE signals).
 
 ## Future Design Goals (maybe)
 
