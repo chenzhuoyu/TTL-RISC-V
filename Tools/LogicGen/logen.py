@@ -191,7 +191,7 @@ def generate_from(ifp: TextIO, ofp: TextIO):
     ands = 0
     terms = []
     for expr in exprs.values():
-        if isinstance(expr, (Not, Symbol)):
+        if isinstance(expr, (And, Not, Symbol)):
             ands += 1
             if expr not in terms:
                 terms.append(expr)
@@ -293,15 +293,18 @@ def generate_from(ifp: TextIO, ofp: TextIO):
     print('\n'.join(desc), file = ofp)
 
 def main():
-    with open('../../Sources/bytemask/bytemask.logic') as ifp:
-        # with open('../../Sources/bytemask/bytemask.pld', 'w') as ofp:
-        out = io.StringIO()
-        try:
-            generate_from(ifp, out)
-        except SyntaxError as e:
-            print('* error: ' + str(e))
-            return 1
-        print(out.getvalue())
+    if len(sys.argv) != 2:
+        print('usage: %s <input-file>', file = sys.stderr)
+        return 1
+    ifn = os.path.abspath(sys.argv[1])
+    ofn = os.path.splitext(ifn)[0] + '.pld'
+    with open(ifn) as ifp:
+        with open(ofn, 'w') as ofp:
+            try:
+                generate_from(ifp, ofp)
+            except SyntaxError as e:
+                print('* error: ' + str(e))
+                return 1
 
 if __name__ == '__main__':
     sys.exit(main())

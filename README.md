@@ -8,8 +8,8 @@ This repository contains the KiCAD schematics and PCB drawings of the processor,
 
 * Supports the `RV32IM` instruction set.
 * Runs at `16MHz` clock speed.
-* Multi-stage pipeline.
-* Single clock cycle instructions.
+* 2-stage pipeline.
+* Mostly single clock cycle instructions.
 * Supports the 6800 bus interface (e.g. R/W and STROBE signals).
 
 ## Future Design Goals (maybe)
