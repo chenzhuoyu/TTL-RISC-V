@@ -6,7 +6,7 @@ This repository contains the KiCAD schematics and PCB drawings of the processor,
 
 ## Current Design Goals
 
-* Supports the `RV32IM` instruction set.
+* Implements the `RV32IM` instruction set.
 * Runs at `16MHz` clock speed.
 * 2-stage pipeline.
 * Mostly single clock cycle instructions.
@@ -14,4 +14,6 @@ This repository contains the KiCAD schematics and PCB drawings of the processor,
 
 ## Future Design Goals (maybe)
 
-* Out-of-order, I havn't figured out how to implement it yet :(
+* Deeper pipelines.
+* Superscalar? Maybe?
+* Out-of-order, but I havn't figured out how to implement it yet :(

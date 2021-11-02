@@ -14,7 +14,6 @@ from sympy import logic
 from typing import List
 from typing import Tuple
 from typing import TextIO
-from sympy.core.compatibility import NotIterable
 
 from sympy.logic.boolalg import Or
 from sympy.logic.boolalg import And
@@ -22,7 +21,6 @@ from sympy.logic.boolalg import Not
 
 from sympy.core.symbol import Symbol
 from sympy.logic.boolalg import BooleanFunction
-from sympy.simplify.simplify import simplify
 
 class Device:
     kind: str
