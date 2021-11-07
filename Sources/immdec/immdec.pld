@@ -2,7 +2,7 @@ GAL22V10
 22V10
 
 NC  NC  NC      P31     P20     P7  OP6     OP5     OP4 OP3 OP2 GND
-NC  X0  S4v1b0  S4v1b1  S10v5   X11 S19v12  S30v20  X31 ILL NC  VCC
+NC  X0  S4v1b0  S4v1b1  S10v5   X11 S19v12  S30v20  X31 NC  NC  VCC
 
 X0     = /OP6 *  OP5 * /OP4 * /OP3 * /OP2 * P7  +       ;;  S * P7
           OP6 *  OP5 *  OP4 * /OP3 * /OP2 * P20 +       ;;  I * P20
@@ -38,14 +38,6 @@ X31    =  OP6                             * P31 +       ;; /R * P31
                                OP3        * P31 +
                                       OP2 * P31
 
-ILL    =  OP6 * /OP5                      +             ;; /R * /I * /S * /B * /U * /J
-          OP6 *         OP4        *  OP2 +
-         /OP6 *  OP5 * /OP4        *  OP2 +
-         /OP6        * /OP4 * /OP3 *  OP2 +
-                        OP4 *  OP3        +
-                               OP3 * /OP2
-
-
 DESCRIPTION
 Immediate value decoder, outputs control bits for the immediate
-component selectors, and detects illegal instruction.
+component selectors.

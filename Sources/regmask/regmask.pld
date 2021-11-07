@@ -1,0 +1,33 @@
+GAL22V10
+22V10
+
+NC  NC  NC  NC  NC  NC  P2  P3  P4  P5  P6  GND 
+NC  S1  S2  RD  NC  NC  NC  NC  NC  NC  NC  VCC 
+
+S1 = P5 * /P2 * /P3 + /P2 * /P3 * /P6 + P5 * P6 * /P3 * /P4 + P2 * P3 * /P4 * /P5 * /P6
+S2 = P5 * /P2 * /P3 * /P4 + P5 * /P2 * /P3 * /P6
+RD = P4 * /P3 * /P6 + P2 * P5 * P6 * /P4 + P4 * P5 * /P2 * /P3 + /P2 * /P3 * /P5 * /P6 + P2 * P3 * /P4 * /P5 * /P6
+
+DESCRIPTION
+Generate register masks.
+
+STATISTICS
+    Terms        = 11
+    Unique Terms = 10
+
+LOGISIM-PLA-FUSE
+    P6   P5   P4   P3   P2   |  S1  S2  RD
+    --------------------------------------
+    · ·  · X  · ·  X ·  X ·  |  X   ·   ·
+    X ·  · ·  · ·  X ·  X ·  |  X   ·   ·
+    · X  · X  X ·  X ·  · ·  |  X   ·   ·
+    X ·  X ·  X ·  · X  · X  |  X   ·   X
+    · ·  · X  X ·  X ·  X ·  |  ·   X   ·
+    X ·  · X  · ·  X ·  X ·  |  ·   X   ·
+    X ·  · ·  · X  X ·  · ·  |  ·   ·   X
+    · X  · X  X ·  · ·  · X  |  ·   ·   X
+    · ·  · X  · X  X ·  X ·  |  ·   ·   X
+    X ·  X ·  · ·  X ·  X ·  |  ·   ·   X
+
+LOGISIM-PLA-ROM-CONTENT
+    0 2 0 1*3 0 0 1 1 2 2 1 1 0 1*3 2 2 0 2 1*4 2 0 1*3 0 2 1 0 2 2 1 0 2 0 2 2 1*4 0 1 1 1 0 0 1 0 0 1 0 0 1 0 1 0 1 0 0 1 0*3 1 0 0 1 0 0 1 0 0 1

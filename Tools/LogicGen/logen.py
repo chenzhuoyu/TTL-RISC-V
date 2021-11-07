@@ -292,7 +292,7 @@ def generate_from(ifp: TextIO, ofp: TextIO):
 
 def main():
     if len(sys.argv) != 2:
-        print('usage: %s <input-file>', file = sys.stderr)
+        print('usage: %s <input-file>' % sys.argv[0], file = sys.stderr)
         return 1
     ifn = os.path.abspath(sys.argv[1])
     ofn = os.path.splitext(ifn)[0] + '.pld'

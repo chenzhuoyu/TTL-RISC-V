@@ -2,7 +2,7 @@ GAL22V10
 22V10
 
 NC  NC  NC  NC  NC  NC  P2  P3  P4  P5  P6  GND 
-NC  R   I   S   B   U   J   S1  S2  RD  NC  VCC 
+NC  R   I   S   B   U   J   ILL NC  NC  NC  VCC 
 
 R = P4 * P5 * /P2 * /P3 * /P6
 I = P2 * P5 * P6 * /P3 * /P4 + P4 * P5 * P6 * /P2 * /P3 + /P2 * /P3 * /P5 * /P6 + P2 * P3 * /P4 * /P5 * /P6
@@ -10,37 +10,33 @@ S = P5 * /P2 * /P3 * /P4 * /P6
 B = P5 * P6 * /P2 * /P3 * /P4
 U = P2 * P4 * /P3 * /P6
 J = P2 * P3 * P5 * P6 * /P4
-S1 = P5 * /P2 * /P3 + /P2 * /P3 * /P6 + P5 * P6 * /P3 * /P4 + P2 * P3 * /P4 * /P5 * /P6
-S2 = P5 * /P2 * /P3 * /P4 + P5 * /P2 * /P3 * /P6
-RD = P4 * /P3 * /P6 + P2 * P5 * P6 * /P4 + P4 * P5 * /P2 * /P3 + /P2 * /P3 * /P5 * /P6 + P2 * P3 * /P4 * /P5 * /P6
+ILL = P3 * P4 + P3 * /P2 + P6 * /P5 + P2 * P4 * P6 + P2 * P5 * /P4 * /P6 + P2 * /P3 * /P4 * /P6
 
 DESCRIPTION
-Classify instructions into R/I/S/B/U/J-types, and generate register masks.
+Classify instructions into R/I/S/B/U/J-types.
 
 STATISTICS
-    Terms        = 20
-    Unique Terms = 17
+    Terms        = 15
+    Unique Terms = 15
 
 LOGISIM-PLA-FUSE
-    P6   P5   P4   P3   P2   |  R  I  S  B  U  J  S1  S2  RD
-    --------------------------------------------------------
-    X ·  · X  · X  X ·  X ·  |  X  ·  ·  ·  ·  ·  ·   ·   ·
-    · X  · X  X ·  X ·  · X  |  ·  X  ·  ·  ·  ·  ·   ·   ·
-    · X  · X  · X  X ·  X ·  |  ·  X  ·  ·  ·  ·  ·   ·   ·
-    X ·  X ·  · ·  X ·  X ·  |  ·  X  ·  ·  ·  ·  ·   ·   X
-    X ·  X ·  X ·  · X  · X  |  ·  X  ·  ·  ·  ·  X   ·   X
-    X ·  · X  X ·  X ·  X ·  |  ·  ·  X  ·  ·  ·  ·   ·   ·
-    · X  · X  X ·  X ·  X ·  |  ·  ·  ·  X  ·  ·  ·   ·   ·
-    X ·  · ·  · X  X ·  · X  |  ·  ·  ·  ·  X  ·  ·   ·   ·
-    · X  · X  X ·  · X  · X  |  ·  ·  ·  ·  ·  X  ·   ·   ·
-    · ·  · X  · ·  X ·  X ·  |  ·  ·  ·  ·  ·  ·  X   ·   ·
-    X ·  · ·  · ·  X ·  X ·  |  ·  ·  ·  ·  ·  ·  X   ·   ·
-    · X  · X  X ·  X ·  · ·  |  ·  ·  ·  ·  ·  ·  X   ·   ·
-    · ·  · X  X ·  X ·  X ·  |  ·  ·  ·  ·  ·  ·  ·   X   ·
-    X ·  · X  · ·  X ·  X ·  |  ·  ·  ·  ·  ·  ·  ·   X   ·
-    X ·  · ·  · X  X ·  · ·  |  ·  ·  ·  ·  ·  ·  ·   ·   X
-    · X  · X  X ·  · ·  · X  |  ·  ·  ·  ·  ·  ·  ·   ·   X
-    · ·  · X  · X  X ·  X ·  |  ·  ·  ·  ·  ·  ·  ·   ·   X
+    P6   P5   P4   P3   P2   |  R  I  S  B  U  J  ILL
+    -------------------------------------------------
+    X ·  · X  · X  X ·  X ·  |  X  ·  ·  ·  ·  ·  ·
+    · X  · X  X ·  X ·  · X  |  ·  X  ·  ·  ·  ·  ·
+    · X  · X  · X  X ·  X ·  |  ·  X  ·  ·  ·  ·  ·
+    X ·  X ·  · ·  X ·  X ·  |  ·  X  ·  ·  ·  ·  ·
+    X ·  X ·  X ·  · X  · X  |  ·  X  ·  ·  ·  ·  ·
+    X ·  · X  X ·  X ·  X ·  |  ·  ·  X  ·  ·  ·  ·
+    · X  · X  X ·  X ·  X ·  |  ·  ·  ·  X  ·  ·  ·
+    X ·  · ·  · X  X ·  · X  |  ·  ·  ·  ·  X  ·  ·
+    · X  · X  X ·  · X  · X  |  ·  ·  ·  ·  ·  X  ·
+    · ·  · ·  · X  · X  · ·  |  ·  ·  ·  ·  ·  ·  X
+    · ·  · ·  · ·  · X  X ·  |  ·  ·  ·  ·  ·  ·  X
+    · X  X ·  · ·  · ·  · ·  |  ·  ·  ·  ·  ·  ·  X
+    · X  · ·  · X  · ·  · X  |  ·  ·  ·  ·  ·  ·  X
+    X ·  · X  X ·  · ·  · X  |  ·  ·  ·  ·  ·  ·  X
+    X ·  · ·  X ·  X ·  · X  |  ·  ·  ·  ·  ·  ·  X
 
 LOGISIM-PLA-ROM-CONTENT
-    1 2 2 1 1 2 2 1 1 2*4 1*4 0 1*5 2 2 1 2 1*3 2 2 1*4 0 2 1 2*3 1 2 2 0 2 0 1*3 0 0 1 1 2 2 1 1 0 0 2 1*4 2 0 1*3 0 2 1 0 2 2 1 0 2 0 2 2 1 1 1 0*9 1 0*8 1 0*8 1 0*6 1 0 1 0*4 1 0 1 0 0 1 0*9 1 0*9 1 0*9 1 0*9 1 0*8 1 0*8 1 0*9 1 0*8 1 0*9 1 0*8 1 0*8 1
+    1 2 2 1 1 2 2 1 1 2*4 1*4 0 1*5 2 2 1 2 1*3 2 2 1*4 0 2 1 2*3 1 2 2 0 0 2 2 0*4 2 1 2 1 0*3 2 0 2 0 2 1 2 1 0 2 1 0 1 1 2 1 0*7 1 0*6 1 0*6 1 0*6 1 0*7 1 0*7 1 0*7 1 0*7 1 0*7 1 0*6 1 0*6 1 0*6 1 0*6 1 0*6 1
