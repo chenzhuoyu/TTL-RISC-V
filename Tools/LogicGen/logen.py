@@ -3,7 +3,6 @@
 
 """ Generates PLD functions from Truth-table for GAL devices """
 
-import io
 import os
 import sys
 import json

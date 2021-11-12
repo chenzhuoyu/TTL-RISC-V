@@ -1,10 +1,12 @@
 TARGET = regmask
 
-.PHONY: all jed flash clean
+.PHONY: all jed pld flash clean
 
 all: flash
 
 jed: ${TARGET}.jed
+
+pld: ${TARGET}.pld
 
 clean:
 	rm -vrf ${TARGET}.{chp,fus,jed,pin}
@@ -14,3 +16,6 @@ flash: jed
 
 ${TARGET}.jed: ${TARGET}.pld
 	galasm ${TARGET}.pld
+
+${TARGET}.pld: ${TARGET}.logic
+	../../Tools/LogicGen/logen.py ${TARGET}.logic

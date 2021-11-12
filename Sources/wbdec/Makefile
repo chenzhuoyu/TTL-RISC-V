@@ -1,4 +1,4 @@
-TARGET = bytemask
+TARGET = wbdec
 
 .PHONY: all jed pld flash clean
 
