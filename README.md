@@ -4,16 +4,19 @@ RISC-V processor & peripherals made (almost) entirely with 74-series TTL logic c
 
 This repository contains the KiCAD schematics and PCB drawings of the processor, along with the related software source code.
 
-## Current Design Goals
+## Current Features
 
 * Implements the `RV32IM` instruction set.
-* Runs at `16MHz` clock speed.
-* 2-stage pipeline.
+* Runs at least `10MHz` clock speed.
+* 5-stage pipeline.
+* Operand forwarding.
 * Mostly single clock cycle instructions.
 * Supports the 6800 bus interface (e.g. R/W and STROBE signals).
+* Bus mastering to support external DMA controllers.
 
 ## Future Design Goals (maybe)
 
-* Deeper pipelines.
-* Superscalar? Maybe?
-* Out-of-order, but I havn't figured out how to implement it yet :(
+* Higher clock speed?
+* Deeper pipelines?
+* Superscalar? It might require too many chips to implement :(
+* Out-of-order? I havn't figured out how to implement it yet :(
