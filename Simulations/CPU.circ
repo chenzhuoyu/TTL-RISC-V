@@ -11,6 +11,7 @@
       <a name="appearance" val="classic"/>
     </tool>
     <tool name="Probe">
+      <a name="appearance" val="classic"/>
       <a name="radix" val="16"/>
     </tool>
     <tool name="Tunnel">
@@ -790,7 +791,7 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
     <comp loc="(1510,470)" name="OperandSequencer"/>
     <comp loc="(1680,470)" name="OperandMux"/>
     <comp loc="(1770,210)" name="StageBuffer"/>
-    <comp loc="(1790,680)" name="ALU"/>
+    <comp loc="(1790,680)" name="ArithmeticLogicUnit"/>
     <comp loc="(2030,210)" name="StageBuffer"/>
     <comp loc="(2290,210)" name="StageBuffer"/>
     <comp loc="(2320,790)" name="ResultBuffer"/>
@@ -3454,9 +3455,9 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
     <wire from="(960,430)" to="(970,430)"/>
     <wire from="(960,470)" to="(980,470)"/>
   </circuit>
-  <circuit name="ALU">
+  <circuit name="ArithmeticLogicUnit">
     <a name="appearance" val="custom"/>
-    <a name="circuit" val="ALU"/>
+    <a name="circuit" val="ArithmeticLogicUnit"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="2.0"/>
     <appear>
@@ -3497,6 +3498,19 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="190" y="404">SLTU</text>
       <text dominant-baseline="central" font-family="Source Code Pro" font-size="12" text-anchor="end" x="436" y="185">(Xu * Yu) &gt;&gt; 32</text>
       <text dominant-baseline="central" font-family="Source Code Pro" font-size="12" text-anchor="end" x="436" y="165">(X * Y) &gt;&gt; 32</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="665" y="334">A = B</text>
+      <rect height="4" stroke="none" width="10" x="690" y="328"/>
+      <rect height="4" stroke="none" width="10" x="690" y="358"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="665" y="364">A &lt; B</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="666" y="394">Au &lt; Bu</text>
+      <rect height="4" stroke="none" width="10" x="690" y="388"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="640" y="419">B</text>
+      <rect height="10" stroke="none" width="4" x="598" y="430"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="600" y="419">A</text>
+      <rect height="10" stroke="none" width="4" x="638" y="430"/>
+      <polyline fill="none" points="690,300 551,300" stroke="#000000"/>
+      <polyline fill="none" points="550,430 550,300" stroke="#000000"/>
+      <text dominant-baseline="central" font-family="Source Code Pro" font-size="16" text-anchor="middle" x="595" y="345">CMP</text>
       <visible-register height="16" path="/Register(660,300)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="442" y="97"/>
       <visible-register height="16" path="/Register(660,380)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="442" y="117"/>
       <visible-register height="16" path="/Register(660,460)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="442" y="137"/>
@@ -3536,19 +3550,6 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
       <visible-led height="10" path="/LED(1520,1090)" stroke-width="0" width="10" x="655" y="195"/>
       <visible-register height="16" path="/Register(1390,680)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="221" y="112"/>
       <visible-register height="16" path="/Register(1390,800)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="221" y="192"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="665" y="334">A = B</text>
-      <rect height="4" stroke="none" width="10" x="690" y="328"/>
-      <rect height="4" stroke="none" width="10" x="690" y="358"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="665" y="364">A &lt; B</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="666" y="394">Au &lt; Bu</text>
-      <rect height="4" stroke="none" width="10" x="690" y="388"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="640" y="419">B</text>
-      <rect height="10" stroke="none" width="4" x="598" y="430"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="600" y="419">A</text>
-      <rect height="10" stroke="none" width="4" x="638" y="430"/>
-      <polyline fill="none" points="690,300 551,300" stroke="#000000"/>
-      <polyline fill="none" points="550,430 550,300" stroke="#000000"/>
-      <text dominant-baseline="central" font-family="Source Code Pro" font-size="16" text-anchor="middle" x="595" y="345">CMP</text>
       <visible-led height="10" path="/LED(600,1080)" stroke-width="0" width="10" x="670" y="325"/>
       <visible-led height="10" path="/LED(650,1080)" stroke-width="0" width="10" x="670" y="355"/>
       <visible-led height="10" path="/LED(700,1080)" stroke-width="0" width="10" x="670" y="385"/>
@@ -5212,9 +5213,9 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
     <wire from="(900,780)" to="(930,780)"/>
     <wire from="(900,830)" to="(910,830)"/>
   </circuit>
-  <circuit name="AGU">
+  <circuit name="AddressGenerationUnit">
     <a name="appearance" val="custom"/>
-    <a name="circuit" val="AGU"/>
+    <a name="circuit" val="AddressGenerationUnit"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="2.0"/>
     <appear>
@@ -6562,8 +6563,6 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
       <rect height="10" stroke="none" width="4" x="258" y="90"/>
       <visible-led height="10" path="/LED(770,640)" stroke-width="0" width="10" x="315" y="335"/>
       <visible-register height="16" path="/Register(1190,520)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="278" y="307"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="411" y="204">FETCH</text>
-      <rect height="4" stroke="none" width="10" x="420" y="198"/>
       <circ-anchor facing="east" height="6" width="6" x="217" y="97"/>
       <circ-anchor facing="east" height="6" width="6" x="217" y="97"/>
       <circ-port height="10" pin="1110,810" width="10" x="205" y="135"/>
@@ -7402,13 +7401,13 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
       <rect height="10" stroke="none" width="4" x="558" y="220"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="320" y="209">CLK</text>
       <rect height="10" stroke="none" width="4" x="318" y="220"/>
-      <visible-register height="16" path="/Register(1230,700)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="493" y="172"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="250" y="194">RS2</text>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="220" y="194">RS1</text>
       <rect height="10" stroke="none" width="4" x="248" y="220"/>
       <rect height="10" stroke="none" width="4" x="218" y="220"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="280" y="194">RD</text>
       <rect height="10" stroke="none" width="4" x="278" y="220"/>
+      <visible-register height="16" path="/Register(1230,700)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="493" y="172"/>
       <visible-register height="16" path="/Register(590,790)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="21" x="270" y="200"/>
       <visible-register height="16" path="/Register(590,910)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="21" x="210" y="200"/>
       <visible-register height="16" path="/Register(590,1030)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="21" x="240" y="200"/>
@@ -8799,11 +8798,11 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
       <polyline fill="none" points="375,220 385,220 380,230" stroke="#000000"/>
       <polyline fill="none" points="375,220 380,230" stroke="#000000"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="381" y="159">CLK</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="260" y="159">SUP</text>
+      <rect height="10" stroke="none" width="4" x="258" y="130"/>
       <visible-register height="16" path="/Register(910,430)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="278" y="153"/>
       <visible-register height="16" path="/Register(910,560)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="278" y="172"/>
       <visible-register height="16" path="/Register(910,690)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="278" y="192"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="260" y="159">SUP</text>
-      <rect height="10" stroke="none" width="4" x="258" y="130"/>
       <circ-anchor facing="east" height="6" width="6" x="207" y="137"/>
       <circ-port height="10" pin="1080,460" width="10" x="435" y="155"/>
       <circ-port height="10" pin="1080,590" width="10" x="435" y="175"/>
@@ -8978,11 +8977,6 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
       <rect height="10" stroke="none" width="4" x="328" y="110"/>
       <rect height="10" stroke="none" width="4" x="258" y="110"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="260" y="139">DIN</text>
-      <visible-led height="10" path="/LED(1040,490)" stroke-width="0" width="10" x="335" y="255"/>
-      <visible-led height="10" path="/LED(1040,550)" stroke-width="0" width="10" x="335" y="285"/>
-      <visible-led height="10" path="/LED(1040,610)" stroke-width="0" width="10" x="335" y="315"/>
-      <visible-led height="10" path="/LED(1040,670)" stroke-width="0" width="10" x="290" y="130"/>
-      <visible-register height="16" path="/Register(1240,350)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="253" y="212"/>
       <rect height="4" stroke="none" width="10" x="220" y="258"/>
       <rect height="4" stroke="none" width="10" x="220" y="318"/>
       <rect height="4" stroke="none" width="10" x="220" y="288"/>
@@ -8999,6 +8993,11 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="325" y="290">→</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="325" y="320">→</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="325" y="260">→</text>
+      <visible-led height="10" path="/LED(1040,490)" stroke-width="0" width="10" x="335" y="255"/>
+      <visible-led height="10" path="/LED(1040,550)" stroke-width="0" width="10" x="335" y="285"/>
+      <visible-led height="10" path="/LED(1040,610)" stroke-width="0" width="10" x="335" y="315"/>
+      <visible-led height="10" path="/LED(1040,670)" stroke-width="0" width="10" x="290" y="130"/>
+      <visible-register height="16" path="/Register(1240,350)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="253" y="212"/>
       <visible-led height="10" path="/LED(620,630)" stroke-width="0" width="10" x="275" y="255"/>
       <visible-led height="10" path="/LED(620,650)" stroke-width="0" width="10" x="275" y="285"/>
       <visible-led height="10" path="/LED(620,670)" stroke-width="0" width="10" x="275" y="315"/>
@@ -11454,12 +11453,12 @@ fffc07b7 87a783 f4637 23e60613 100793 100713 f706b3 fed66ae3
       <rect height="10" stroke="none" width="4" x="418" y="240"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="420" y="229">MEM</text>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="310" y="189">MEM</text>
+      <rect height="10" stroke="none" width="4" x="218" y="240"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="220" y="229">CLK</text>
       <visible-led height="10" path="/LED(710,380)" stroke-width="0" width="10" x="230" y="165"/>
       <visible-led height="10" path="/LED(710,400)" stroke-width="0" width="10" x="255" y="165"/>
       <visible-led height="10" path="/LED(710,430)" stroke-width="0" width="10" x="280" y="165"/>
       <visible-led height="10" path="/LED(710,450)" stroke-width="0" width="10" x="305" y="165"/>
-      <rect height="10" stroke="none" width="4" x="218" y="240"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="220" y="229">CLK</text>
       <visible-led height="10" path="/LED(710,740)" stroke-width="0" width="10" x="230" y="195"/>
       <visible-led height="10" path="/LED(710,760)" stroke-width="0" width="10" x="255" y="195"/>
       <visible-led height="10" path="/LED(710,790)" stroke-width="0" width="10" x="280" y="195"/>
