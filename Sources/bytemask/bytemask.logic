@@ -5,12 +5,13 @@ device:
 
 pins:
     GND A1  A0  S1  S0  L1  L0  _   _   _   _   _
-    _   LB  IO  ST  M3  M2  M1  M0  EX  _   _   VCC
+    _   LD  LB  IO  ST  M3  M2  M1  M0  EX  _   VCC
 
 define:
     H  = S1 | L1
     L  = S0 | L0
     ST = S0 | S1
+    LD = L0 | L1
     LB = L0 & ~L1
 
 table:
