@@ -23,7 +23,7 @@ def OP(name: str, f: int, g: int, f3: int, op: int, ctl: int):
             for k in range(8):
                 if f in (i, X) and g in (j, X) and f3 in (k, XXXXX):
                     cc = (i << 9) | (j << 8) | (k << 5) | op
-                    if not (microps[cc] & SIGILL):
+                    if microps[cc] != SIGILL:
                         raise ValueError('{0}: instruction was already assigned: {1:09b} == {2:03b}'.format(name, cc, microps[cc]))
                     else:
                         microps[cc] = ctl
