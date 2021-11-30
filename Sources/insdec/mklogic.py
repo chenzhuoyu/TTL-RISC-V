@@ -6,34 +6,39 @@
 
 PCREL     = 1 << 0
 OPIMM     = 1 << 1
-SLT       = 1 << 2
-SLTU      = 1 << 3
-SHIFT     = 1 << 8
+SHIFT     = 1 << 7
+CSR       = 1 << 8
+CSRI      = 1 << 9
+CSRBIT    = 1 << 10
+CSRCLR    = 1 << 11
+SIGILL    = 1 << 12
 
-ALU_ADD    = 0 << 4
-ALU_SUB    = 1 << 4
-ALU_MUL    = 2 << 4
-ALU_MULH   = 3 << 4
-ALU_MULHU  = 4 << 4
-ALU_MULHSU = 5 << 4
-ALU_DIV    = 6 << 4
-ALU_DIVU   = 7 << 4
-ALU_REM    = 8 << 4
-ALU_REMU   = 9 << 4
-ALU_OR     = 10 << 4
-ALU_AND    = 11 << 4
-ALU_XOR    = 12 << 4
-ALU_SHL    = 13 << 4
-ALU_SHR    = 14 << 4
-ALU_SAR    = 15 << 4
+ALU_ADD    = 0 << 2
+ALU_SUB    = 1 << 2
+ALU_MUL    = 2 << 2
+ALU_MULH   = 3 << 2
+ALU_MULHU  = 4 << 2
+ALU_MULHSU = 5 << 2
+ALU_DIV    = 6 << 2
+ALU_DIVU   = 7 << 2
+ALU_REM    = 8 << 2
+ALU_REMU   = 9 << 2
+ALU_OR     = 10 << 2
+ALU_AND    = 11 << 2
+ALU_XOR    = 12 << 2
+ALU_SHL    = 13 << 2
+ALU_SHR    = 14 << 2
+ALU_SAR    = 15 << 2
+ALU_SLT    = 16 << 2
+ALU_SLTU   = 17 << 2
 
 X        = -1
 XXXXX    = -1
-CTL_BITS = 9
+CTL_BITS = 13
 ROM_SIZE = 1 << 10
 
 bits = 0
-microps = [0 for _ in range(ROM_SIZE)]
+microps = [SIGILL for _ in range(ROM_SIZE)]
 
 def OP(name: str, f: int, g: int, f3: int, op: int, ctl: int):
     for i in range(2):
@@ -41,8 +46,8 @@ def OP(name: str, f: int, g: int, f3: int, op: int, ctl: int):
             for k in range(8):
                 if f in (i, X) and g in (j, X) and f3 in (k, XXXXX):
                     cc = (i << 9) | (j << 8) | (k << 5) | op
-                    if microps[cc]:
-                        raise ValueError('{0}: instruction was already assigned: {1:09b} == {2:03b}'.format(name, cc, microps[cc]))
+                    if microps[cc] != SIGILL:
+                        raise ValueError('{0}: instruction was already assigned: {1:010b} == {2:014b}'.format(name, cc, microps[cc]))
                     else:
                         microps[cc] = ctl
 
@@ -66,8 +71,8 @@ OP('SB'     , X, X, 0b000, 0b01000, OPIMM | ALU_ADD)
 OP('SH'     , X, X, 0b001, 0b01000, OPIMM | ALU_ADD)
 OP('SW'     , X, X, 0b010, 0b01000, OPIMM | ALU_ADD)
 OP('ADDI'   , X, X, 0b000, 0b00100, OPIMM | ALU_ADD)
-OP('SLTI'   , X, X, 0b010, 0b00100, OPIMM | SLT)
-OP('SLTIU'  , X, X, 0b011, 0b00100, OPIMM | SLT | SLTU)
+OP('SLTI'   , X, X, 0b010, 0b00100, OPIMM | ALU_SLT)
+OP('SLTIU'  , X, X, 0b011, 0b00100, OPIMM | ALU_SLTU)
 OP('XORI'   , X, X, 0b100, 0b00100, OPIMM | ALU_XOR)
 OP('ORI'    , X, X, 0b110, 0b00100, OPIMM | ALU_OR)
 OP('ANDI'   , X, X, 0b111, 0b00100, OPIMM | ALU_AND)
@@ -77,15 +82,17 @@ OP('SRAI'   , 1, 0, 0b101, 0b00100, OPIMM | ALU_SAR | SHIFT)
 OP('ADD'    , 0, 0, 0b000, 0b01100, ALU_ADD)
 OP('SUB'    , 1, 0, 0b000, 0b01100, ALU_SUB)
 OP('SLL'    , 0, 0, 0b001, 0b01100, ALU_SHL)
-OP('SLT'    , 0, 0, 0b010, 0b01100, SLT)
-OP('SLTU'   , 0, 0, 0b011, 0b01100, SLT | SLTU)
+OP('SLT'    , 0, 0, 0b010, 0b01100, ALU_SLT)
+OP('SLTU'   , 0, 0, 0b011, 0b01100, ALU_SLTU)
 OP('XOR'    , 0, 0, 0b100, 0b01100, ALU_XOR)
 OP('SRL'    , 0, 0, 0b101, 0b01100, ALU_SHR)
 OP('SRA'    , 1, 0, 0b101, 0b01100, ALU_SAR)
 OP('OR'     , 0, 0, 0b110, 0b01100, ALU_OR)
 OP('AND'    , 0, 0, 0b111, 0b01100, ALU_AND)
 OP('FENCE'  , X, X, 0b000, 0b00011, 0)
-OP('SYSTEM' , 0, 0, 0b000, 0b11100, 0)
+OP('FENCE.I', X, X, 0b001, 0b00011, 0)
+OP('SYSTEM' , X, X, 0b000, 0b11100, 0)
+
 OP('MUL'    , 0, 1, 0b000, 0b01100, ALU_MUL)
 OP('MULH'   , 0, 1, 0b001, 0b01100, ALU_MULH)
 OP('MULHU'  , 0, 1, 0b011, 0b01100, ALU_MULHU)
@@ -95,15 +102,22 @@ OP('DIVU'   , 0, 1, 0b101, 0b01100, ALU_DIVU)
 OP('REM'    , 0, 1, 0b110, 0b01100, ALU_REM)
 OP('REMU'   , 0, 1, 0b111, 0b01100, ALU_REMU)
 
+OP('CSRRW'  , X, X, 0b001, 0b11100, CSR)
+OP('CSRRS'  , X, X, 0b010, 0b11100, CSR | CSRBIT)
+OP('CSRRC'  , X, X, 0b011, 0b11100, CSR | CSRBIT | CSRCLR)
+OP('CSRRWI' , X, X, 0b101, 0b11100, CSR | CSRI | OPIMM)
+OP('CSRRSI' , X, X, 0b110, 0b11100, CSR | CSRI | OPIMM | CSRBIT)
+OP('CSRRCI' , X, X, 0b111, 0b11100, CSR | CSRI | OPIMM | CSRBIT | CSRCLR)
+
 for v in microps:
     bits <<= CTL_BITS
     bits |= v ^ SHIFT
 
-with open('arithdec-logisim.bin', 'wb') as fp:
+with open('insdec-logisim.bin', 'wb') as fp:
     fp.write(bits.to_bytes(ROM_SIZE * CTL_BITS // 8, 'big'))
 
-# with open('arithdec.logic', 'w') as fp:
-#     print('Instruction Decoder for Arithmetic Stage.', file = fp)
+# with open('insdec.logic', 'w') as fp:
+#     print('Instruction decoder.', file = fp)
 #     print(file = fp)
 #     print('device:', file = fp)
 #     print('    GAL22V10', file = fp)
@@ -124,5 +138,5 @@ with open('arithdec-logisim.bin', 'wb') as fp:
 
 # subprocess.call([
 #     fname,
-#     './arithdec.logic'
+#     './insdec.logic'
 # ])

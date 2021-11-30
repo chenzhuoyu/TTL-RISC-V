@@ -6,7 +6,7 @@ This repository contains the KiCAD schematics and PCB drawings of the processor,
 
 ## Current Features
 
-* Implements the `RV32IM` instruction set.
+* Implements the `RV32IM Zifencei Zicsr` instruction set.
 * Runs at least `10MHz` clock speed.
 * Multi-stage pipeline.
 * Operand forwarding.
