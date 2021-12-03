@@ -1,0 +1,23 @@
+GAL22V10
+22V10
+
+NC  NC  NC  NC  NC  NC  NC  In  Qn  CLR BIT GND 
+NC  Q   NC  NC  NC  NC  NC  NC  NC  NC  NC  VCC 
+
+Q = In * /BIT + In * /CLR + BIT * Qn * /In
+
+DESCRIPTION
+
+STATISTICS
+    Terms        = 3
+    Unique Terms = 3
+
+LOGISIM-PLA-FUSE
+    BIT  CLR  Qn   In   |  Q
+    ------------------------
+    X ·  · ·  · ·  · X  |  X
+    · ·  X ·  · ·  · X  |  X
+    · X  · ·  · X  X ·  |  X
+
+LOGISIM-PLA-ROM-CONTENT
+    1 0 0 2 0 1 0 2 2 0 2 1 1*3
