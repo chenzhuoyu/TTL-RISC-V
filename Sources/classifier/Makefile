@@ -9,7 +9,7 @@ jed: ${TARGET}.jed
 pld: ${TARGET}.pld
 
 clean:
-	rm -vrf ${TARGET}.{chp,fus,jed,pin}
+	rm -vrf ${TARGET}.{chp,fus,jed,pin,pld}
 
 flash: jed
 	minipro -p 'GAL22V10D' -w ${TARGET}.jed
