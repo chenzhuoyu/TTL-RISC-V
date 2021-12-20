@@ -38,7 +38,7 @@ OP('marchid'   , 0xf12, MARCHID   , R)     # hw: 0x00001000
 OP('mimpid'    , 0xf13, MIMPID    , R)     # hw: 0x00000001
 OP('mhartid'   , 0xf14, MHARTID   , R)     # hw: 0x00000000
 OP('misa'      , 0x301, MISA      , R | W) # ro: 0x40001100 (RV32IM)
-OP('mie'       , 0x304, MIE       , R | W) # rw: 0x00000000 (bit 3, 11)
+OP('mie'       , 0x304, MIE       , R | W) # rw: 0x00000000 (bit 11:MEIE)
 OP('mtvec'     , 0x305, MTVEC     , R | W) # ro: 0xfffffff0
 OP('mscratch'  , 0x340, MSCRATCH  , R | W) # rw: 0x00000000
 OP('mepc'      , 0x341, MEPC      , R | W) # rw: 0x00000000

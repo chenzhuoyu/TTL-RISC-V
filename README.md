@@ -8,7 +8,7 @@ This is designed to be as simple as possible, but it should be a practical proce
 
 ## Current Design Goals
 
-* Implements the `RV32I Zifencei Zicsr` instruction set.
+* Implements the `RV32IM Zifencei Zicsr` instruction set.
 * Runs at least `8MHz` clock speed.
 * 2-stage pipelines.
 * Interrupts.
@@ -18,7 +18,6 @@ This is designed to be as simple as possible, but it should be a practical proce
 
 ## Future Design Goals (maybe)
 
-* `M` extension?
 * Higher clock speed?
 * Deeper pipelines?
 * Out-of-order?
