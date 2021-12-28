@@ -5,12 +5,13 @@ MVENDORID = 1
 MARCHID   = 2
 MIMPID    = 3
 MHARTID   = 4
-MISA      = 5
-MIE       = 6
-MTVEC     = 7
-MSCRATCH  = 8
-MEPC      = 9
-MCAUSE    = 10
+MSTATUS   = 5
+MISA      = 6
+MIE       = 7
+MTVEC     = 8
+MSCRATCH  = 9
+MEPC      = 10
+MCAUSE    = 11
 SIGILL    = 1 << 4
 
 R         = 1
@@ -37,6 +38,7 @@ OP('mvendorid' , 0xf11, MVENDORID , R)     # hw: 0x43685a59 (ChZY)
 OP('marchid'   , 0xf12, MARCHID   , R)     # hw: 0x00001000
 OP('mimpid'    , 0xf13, MIMPID    , R)     # hw: 0x00000001
 OP('mhartid'   , 0xf14, MHARTID   , R)     # hw: 0x00000000
+OP('mstatus'   , 0x300, MSTATUS   , R | W) # rw: 0x00000000 (RV32IM)
 OP('misa'      , 0x301, MISA      , R | W) # ro: 0x40001100 (RV32IM)
 OP('mie'       , 0x304, MIE       , R | W) # rw: 0x00000000 (bit 11:MEIE)
 OP('mtvec'     , 0x305, MTVEC     , R | W) # ro: 0xfffffff0

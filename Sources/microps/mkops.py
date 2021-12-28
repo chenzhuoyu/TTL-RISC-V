@@ -124,7 +124,8 @@ OP('OR'     , 0, 0, 0, 0b110, 0b01100, ALU_OR   | REG_WE | FUNCT)
 OP('AND'    , 0, 0, 0, 0b111, 0b01100, ALU_AND  | REG_WE | FUNCT)
 OP('FENCE'  , 0, X, X, 0b000, 0b00011, 0)
 OP('FENCE.I', 0, X, X, 0b001, 0b00011, 0)
-OP('SYSTEM' , 0, 0, X, 0b000, 0b11100, FUNCT | SYSTEM)
+OP('SYSTEM' , 0, 0, X, 0b000, 0b11100, SYSTEM | HOLD)
+OP('SYSTEM' , 1, 0, X, 0b000, 0b11100, SYSTEM | HOLD)
 
 OP('MUL'    , 0, 0, 1, 0b000, 0b01100, ALU_MUL    | REG_WE | FUNCT)
 OP('MULH'   , 0, 0, 1, 0b001, 0b01100, ALU_MULH   | REG_WE | FUNCT)
@@ -144,7 +145,7 @@ OP('CSRRCI' , 0, X, X, 0b111, 0b11100, REG_WE | OPIMM | CSR_EN | CSR_IMM | CSR_B
 
 for v in microps:
     bits <<= OUT_BITS
-    bits |= 0 if v == SIGILL else v ^ SHIFT
+    bits |= SIGILL if v == SIGILL else v ^ SHIFT
 
 with open('microps-logisim.bin', 'wb') as fp:
     fp.write(bits.to_bytes(ROM_SIZE * OUT_BITS // 8, 'big'))

@@ -1,0 +1,35 @@
+GAL22V10
+22V10
+
+NC  NC  NC  NC  NC  NC  P20 P21 P22 P28 P29 GND 
+NC  SYS BRK RET WFI ILL NC  NC  NC  NC  NC  VCC 
+
+SYS = /P20 * /P21 * /P22 * /P28 * /P29
+BRK = P20 * /P21 * /P22 * /P28 * /P29
+RET = P21 * P28 * P29 * /P20 * /P22
+WFI = P20 * P22 * P28 * /P21 * /P29
+ILL = P20 * P21 + P21 * /P28 + P22 * /P20 + P22 * /P28 + P29 * /P21 + P28 * /P22 * /P29
+
+DESCRIPTION
+SYSTEM sub-opcode decoder.
+
+STATISTICS
+    Terms        = 10
+    Unique Terms = 10
+
+LOGISIM-PLA-FUSE
+    P29  P28  P22  P21  P20  |  SYS  BRK  RET  WFI  ILL
+    ---------------------------------------------------
+    X ·  X ·  X ·  X ·  X ·  |  X    ·    ·    ·    ·
+    X ·  X ·  X ·  X ·  · X  |  ·    X    ·    ·    ·
+    · X  · X  X ·  · X  X ·  |  ·    ·    X    ·    ·
+    X ·  · X  · X  X ·  · X  |  ·    ·    ·    X    ·
+    · ·  · ·  · ·  · X  · X  |  ·    ·    ·    ·    X
+    · ·  X ·  · ·  · X  · ·  |  ·    ·    ·    ·    X
+    · ·  · ·  · X  · ·  X ·  |  ·    ·    ·    ·    X
+    · ·  X ·  · X  · ·  · ·  |  ·    ·    ·    ·    X
+    · X  · ·  · ·  X ·  · ·  |  ·    ·    ·    ·    X
+    X ·  · X  X ·  · ·  · ·  |  ·    ·    ·    ·    X
+
+LOGISIM-PLA-ROM-CONTENT
+    1*9 2*3 1 2 1 1 2 2 1 2 0*3 2 2 0 1 0 2 0*3 2 0 1 0 1 2 0 0 2 0 0 1 0 1 2 1 0 0 1 0*5 1 0*5 1 0*5 1 0*5 1 0*4 1 0*4 1 0*4 1 0*4 1 0*4 1
