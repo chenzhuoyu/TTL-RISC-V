@@ -6,12 +6,21 @@ MEMORY {
 }
 
 SECTIONS {
-    .isr  : { *(.isr)  } > isr
-    .text : { *(.text) } > rom
+    .isr : {
+        *(.isr)
+        *(.isr.*)
+    } > isr
+
+    .text : {
+        *(.text)
+        *(.text.*)
+    } > rom
 
     .data : {
         *(.data)
+        *(.data.*)
         *(.bss)
+        *(.bss.*)
         . = 0x40000;
         STACK = .;
     } > ram
