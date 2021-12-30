@@ -1,43 +1,48 @@
 GAL22V10
 22V10
 
-NC  NC  NC      P31     P20     P7  OP6     OP5     OP4 OP3 OP2 GND
-NC  X0  S4v1b0  S4v1b1  S10v5   X11 S19v12  S30v20  X31 NC  NC  VCC
+NC  NC  NC  P2  P3  P4  P5  P6  P7  P20 P31 GND 
+NC  X0  S4v1b0S4v1b1S10v5X11 S19v12S30v20NC  NC  NC  VCC 
 
-X0     = /OP6 *  OP5 * /OP4 * /OP3 * /OP2 * P7  +       ;;  S * P7
-          OP6 *  OP5 *  OP4 * /OP3 * /OP2 * P20 +       ;;  I * P20
-          OP6 *  OP5 * /OP4 * /OP3 *  OP2 * P20 +
-         /OP6 * /OP5 * /OP4 *  OP3 *  OP2 * P20 +
-         /OP6 * /OP5        * /OP3 * /OP2 * P20
-
-S4v1b0 =  OP6 *  OP5 *  OP4 * /OP3 * /OP2 +             ;;  I + J
-          OP6 *  OP5 * /OP4        *  OP2 +
-         /OP6 * /OP5 * /OP4 *  OP3 *  OP2 +
-         /OP6 * /OP5        * /OP3 * /OP2
-
-S4v1b1 =         OP5 * /OP4 * /OP3 * /OP2               ;;  S + B
-S10v5  =  OP6                             +             ;; /U * /R
-                /OP5               * /OP2 +
-                       /OP4               +
-                               OP3
-
-X11    =  OP6 *  OP5 * /OP4 * /OP3 * /OP2 * P7  +       ;;  B * P7
-          OP6 *  OP5 * /OP4 *  OP3 *  OP2 * P20 +       ;;  J * P20
-          OP6                             * P31 +       ;; /U * /R * P31
-                /OP5               * /OP2 * P31 +
-                       /OP4               * P31 +
-                               OP3        * P31
-
-S19v12 = /OP6        *  OP4 * /OP3 *  OP2 +             ;;  U + J
-          OP6 *  OP5 * /OP4 *  OP3 *  OP2
-
-S30v20 = /OP6        *  OP4 * /OP3 *  OP2               ;;  U
-X31    =  OP6                             * P31 +       ;; /R * P31
-                /OP5                      * P31 +
-                       /OP4               * P31 +
-                               OP3        * P31 +
-                                      OP2 * P31
+X0 = P2 * P20 * P5 * P6 * /P3 * /P4 + P20 * P4 * P5 * P6 * /P2 * /P3 + P20 * /P2 * /P3 * /P5 * /P6 + P2 * P20 * P3 * /P4 * /P5 * /P6 + P5 * P7 * /P2 * /P3 * /P4 * /P6
+S4v1b0 = P2 * P5 * P6 * /P4 + P4 * P5 * P6 * /P2 * /P3 + /P2 * /P3 * /P5 * /P6 + P2 * P3 * /P4 * /P5 * /P6
+S4v1b1 = P5 * /P2 * /P3 * /P4
+S10v5 = P2 * P5 * P6 * /P4 + P5 * P6 * /P2 * /P3 + /P2 * /P3 * /P4 * /P6 + /P2 * /P3 * /P5 * /P6 + P2 * P3 * /P4 * /P5 * /P6
+X11 = P2 * P20 * P3 * P5 * P6 * /P4 + P2 * P31 * P5 * P6 * /P3 * /P4 + P31 * P4 * P5 * P6 * /P2 * /P3 + P31 * /P2 * /P3 * /P4 * /P6 + P31 * /P2 * /P3 * /P5 * /P6 + P2 * P3 * P31 * /P4 * /P5 * /P6 + P5 * P6 * P7 * /P2 * /P3 * /P4
+S19v12 = P2 * P4 * /P3 * /P6 + P2 * P3 * P5 * P6 * /P4
+S30v20 = P2 * P4 * /P3 * /P6
 
 DESCRIPTION
-Immediate value decoder, outputs control bits for the immediate
-component selectors.
+Immediate value decoder, outputs control bits for the immediate component selectors.
+
+STATISTICS
+    Terms        = 25
+    Unique Terms = 21
+
+LOGISIM-PLA-FUSE
+    P31  P20  P7   P6   P5   P4   P3   P2   |  X0  S4v1b0  S4v1b1  S10v5  X11  S19v12  S30v20
+    -----------------------------------------------------------------------------------------
+    · ·  · X  · ·  · X  · X  X ·  X ·  · X  |  X   ·       ·       ·      ·    ·       ·
+    · ·  · X  · ·  · X  · X  · X  X ·  X ·  |  X   ·       ·       ·      ·    ·       ·
+    · ·  · X  · ·  X ·  X ·  · ·  X ·  X ·  |  X   ·       ·       ·      ·    ·       ·
+    · ·  · X  · ·  X ·  X ·  X ·  · X  · X  |  X   ·       ·       ·      ·    ·       ·
+    · ·  · ·  · X  X ·  · X  X ·  X ·  X ·  |  X   ·       ·       ·      ·    ·       ·
+    · ·  · ·  · ·  · X  · X  X ·  · ·  · X  |  ·   X       ·       X      ·    ·       ·
+    · ·  · ·  · ·  · X  · X  · X  X ·  X ·  |  ·   X       ·       ·      ·    ·       ·
+    · ·  · ·  · ·  X ·  X ·  · ·  X ·  X ·  |  ·   X       ·       X      ·    ·       ·
+    · ·  · ·  · ·  X ·  X ·  X ·  · X  · X  |  ·   X       ·       X      ·    ·       ·
+    · ·  · ·  · ·  · ·  · X  X ·  X ·  X ·  |  ·   ·       X       ·      ·    ·       ·
+    · ·  · ·  · ·  · X  · X  · ·  X ·  X ·  |  ·   ·       ·       X      ·    ·       ·
+    · ·  · ·  · ·  X ·  · ·  X ·  X ·  X ·  |  ·   ·       ·       X      ·    ·       ·
+    · ·  · X  · ·  · X  · X  X ·  · X  · X  |  ·   ·       ·       ·      X    ·       ·
+    · X  · ·  · ·  · X  · X  X ·  X ·  · X  |  ·   ·       ·       ·      X    ·       ·
+    · X  · ·  · ·  · X  · X  · X  X ·  X ·  |  ·   ·       ·       ·      X    ·       ·
+    · X  · ·  · ·  X ·  · ·  X ·  X ·  X ·  |  ·   ·       ·       ·      X    ·       ·
+    · X  · ·  · ·  X ·  X ·  · ·  X ·  X ·  |  ·   ·       ·       ·      X    ·       ·
+    · X  · ·  · ·  X ·  X ·  X ·  · X  · X  |  ·   ·       ·       ·      X    ·       ·
+    · ·  · ·  · X  · X  · X  X ·  X ·  X ·  |  ·   ·       ·       ·      X    ·       ·
+    · ·  · ·  · ·  X ·  · ·  · X  X ·  · X  |  ·   ·       ·       ·      ·    X       X
+    · ·  · ·  · ·  · X  · X  X ·  · X  · X  |  ·   ·       ·       ·      ·    X       ·
+
+LOGISIM-PLA-ROM-CONTENT
+    0 2 0 2 2 1 1 2 0 2 0 2*3 1 1 0 2 0 1 1 0 1 1 0 2 0 1*3 2 2 0 0 2 1 2 1*3 0*3 2 2 1 0 2 0*3 2*3 1 1 0*3 1 1 0 1 1 0*3 1*3 2 2 0*4 2 1*3 0*3 2 2 0 1 1 0*3 1 0 1*3 0 2 0 2 2 1 2*3 0 0 2 2 1 1 2 2 0 0 2*3 1 1 2 0 0 1 0 1*3 2 0 0 1 1 0 1 1 2 0 0 1*3 2 2 0 0 2*3 1*3 0*3 1 0 2 1 2 0*3 2 2 1 2 2 1 0*6 1 0*6 1 0*6 1 0*6 1 0*7 1 0 1 0*4 1 0*6 1 0 1 0*4 1 0 1 0*5 1 0*7 1 0*6 1 0*7 1 0*6 1 0*6 1 0*6 1 0*6 1 0*6 1 0*6 1 0*7 1 1 0*5 1 0
