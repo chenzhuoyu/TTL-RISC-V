@@ -538,6 +538,9 @@ c4 0 24 8b ee 1 60 30
       <a name="width" val="32"/>
     </comp>
     <comp lib="0" loc="(320,960)" name="Constant"/>
+    <comp lib="0" loc="(340,970)" name="Constant">
+      <a name="facing" val="north"/>
+    </comp>
     <comp lib="0" loc="(360,400)" name="Constant">
       <a name="value" val="0x3fff"/>
       <a name="width" val="14"/>
@@ -554,9 +557,15 @@ c4 0 24 8b ee 1 60 30
       <a name="value" val="0x2"/>
       <a name="width" val="5"/>
     </comp>
+    <comp lib="0" loc="(390,970)" name="Constant">
+      <a name="facing" val="north"/>
+    </comp>
     <comp lib="0" loc="(440,790)" name="Constant">
-      <a name="value" val="0xc008000"/>
+      <a name="value" val="0xc0008000"/>
       <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(440,970)" name="Constant">
+      <a name="facing" val="north"/>
     </comp>
     <comp lib="0" loc="(460,250)" name="Splitter">
       <a name="appear" val="center"/>
@@ -593,9 +602,27 @@ c4 0 24 8b ee 1 60 30
       <a name="incoming" val="30"/>
       <a name="spacing" val="9"/>
     </comp>
+    <comp lib="0" loc="(490,970)" name="Constant">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="0" loc="(540,970)" name="Constant">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="0" loc="(590,970)" name="Constant">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="0" loc="(640,970)" name="Constant">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="0" loc="(690,970)" name="Constant">
+      <a name="facing" val="north"/>
+    </comp>
     <comp lib="0" loc="(740,190)" name="Bit Extender">
       <a name="in_width" val="30"/>
       <a name="out_width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(740,970)" name="Constant">
+      <a name="facing" val="north"/>
     </comp>
     <comp lib="0" loc="(770,210)" name="Constant">
       <a name="value" val="0x2"/>
@@ -711,10 +738,10 @@ c4 0 24 8b ee 1 60 30
       <a name="addrWidth" val="16"/>
       <a name="appearance" val="classic"/>
       <a name="contents">addr/data: 16 32
-100073 c0086b7 100593 100713 200793 b6a023 f70633 b6a023
-e63533 f6a023 78713 fe0510e3 60793 f70633 e63533 f6a023
-78713 fc0514e3 fe9ff06f 65257*0 12b7 80028293 3042a073 800c137
-fffc0337 34131073 8800393 3003a073 30200073 247*0 c01ff06f
+c00086b7 100593 100713 200793 b6a023 f70633 b6a023 e63533
+f6a023 78713 fe0510e3 60793 f70633 e63533 f6a023 78713
+fc0514e3 fe9ff06f 65454*0 8040117 10010113 12b7 80028293 3042a073
+fffc0317 ec30313 34131073 8800393 3003a073 30200073
 </a>
       <a name="dataWidth" val="32"/>
     </comp>
@@ -1194,16 +1221,16 @@ fffc0337 34131073 8800393 3003a073 30200073 247*0 c01ff06f
       <a name="width" val="32"/>
     </comp>
     <comp lib="0" loc="(110,1240)" name="Splitter">
-      <a name="facing" val="west"/>
-      <a name="fanout" val="32"/>
-      <a name="incoming" val="32"/>
-    </comp>
-    <comp lib="0" loc="(110,1240)" name="Splitter">
       <a name="appear" val="right"/>
       <a name="facing" val="north"/>
       <a name="fanout" val="32"/>
       <a name="incoming" val="32"/>
       <a name="spacing" val="5"/>
+    </comp>
+    <comp lib="0" loc="(110,1240)" name="Splitter">
+      <a name="facing" val="west"/>
+      <a name="fanout" val="32"/>
+      <a name="incoming" val="32"/>
     </comp>
     <comp lib="0" loc="(1130,160)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -1622,15 +1649,15 @@ fffc0337 34131073 8800393 3003a073 30200073 247*0 c01ff06f
       <a name="spacing" val="5"/>
     </comp>
     <comp lib="0" loc="(1720,1270)" name="Splitter">
-      <a name="appear" val="right"/>
-      <a name="fanout" val="32"/>
-      <a name="incoming" val="32"/>
-    </comp>
-    <comp lib="0" loc="(1720,1270)" name="Splitter">
       <a name="facing" val="north"/>
       <a name="fanout" val="32"/>
       <a name="incoming" val="32"/>
       <a name="spacing" val="5"/>
+    </comp>
+    <comp lib="0" loc="(1720,1270)" name="Splitter">
+      <a name="appear" val="right"/>
+      <a name="fanout" val="32"/>
+      <a name="incoming" val="32"/>
     </comp>
     <comp lib="0" loc="(1760,1270)" name="Tunnel">
       <a name="facing" val="south"/>
@@ -10587,7 +10614,7 @@ f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
     </comp>
     <comp lib="0" loc="(580,1100)" name="Constant">
       <a name="facing" val="north"/>
-      <a name="value" val="0xfffffff0"/>
+      <a name="value" val="0xffffff00"/>
       <a name="width" val="32"/>
     </comp>
     <comp lib="0" loc="(600,1030)" name="Tunnel">
