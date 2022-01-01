@@ -21,4 +21,9 @@ SECTIONS {
         *(.bss)
         *(.bss.*)
     } > ram
+
+    .stack : {
+        . = 0x4000;
+        rt_stack_base = .;
+    } > ram
 }
