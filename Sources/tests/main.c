@@ -5,8 +5,8 @@
 
 #define DISPLAY     (*(volatile uint32_t *)IOV_DISPLAY)
 
-#define RESET       0x0000003f
 #define ECALL       0x0000000b
+#define EXTINT      0x8000000b
 
 #define MIE         (1 << 3)
 #define MEIE        (1 << 11)
@@ -88,6 +88,7 @@ void isr_syscall(frame_t *frame) {
 
 void isr_handler(frame_t *frame, uint32_t cause) {
     switch (cause) {
-        case ECALL: isr_syscall(frame); break;
+        case ECALL  : isr_syscall(frame); frame->pc += 4; break;
+        case EXTINT : DISPLAY = 99999999; break;
     }
 }

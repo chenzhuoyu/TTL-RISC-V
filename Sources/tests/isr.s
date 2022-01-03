@@ -10,7 +10,8 @@ reset:
     csrw    mepc, t0
     li      t0, 0x800
     csrs    mie, t0
-    csrsi   mstatus, 0x08
+    li      t0, 0x80
+    csrs    mstatus, t0
     mret
 
 .text
@@ -56,7 +57,6 @@ isr_entry:
     csrr    a1, mcause
     call    isr_handler
     lw      t0, (sp)
-    addi    t0, t0, 4
     csrw    mepc, t0
     lw      x31, 124(sp)
     lw      x30, 120(sp)
