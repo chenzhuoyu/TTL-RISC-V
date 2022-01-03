@@ -163,7 +163,7 @@ c4 0 24 8b ee 1 60 30
     <a name="circuit" val="Processor"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="clabelfont" val="Source Code Pro bold 16"/>
-    <a name="simulationFrequency" val="16.0"/>
+    <a name="simulationFrequency" val="2048000.0"/>
     <comp lib="0" loc="(1020,650)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="EAL"/>
