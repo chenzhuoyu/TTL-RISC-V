@@ -10,3 +10,5 @@ fp-info-cache
 *.chp
 *.pin
 *.jed
+*.elf
+*.o

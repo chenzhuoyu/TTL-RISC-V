@@ -478,23 +478,6 @@ c4 0 24 8b ee 1 60 30
       <a name="labelfont" val="Source Code Pro bold 16"/>
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(2240,650)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="RX"/>
-      <a name="labelfont" val="Source Code Pro bold 16"/>
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(2280,650)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="OPI"/>
-      <a name="labelfont" val="Source Code Pro bold 16"/>
-    </comp>
-    <comp lib="0" loc="(2320,650)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="IMM"/>
-      <a name="labelfont" val="Source Code Pro bold 16"/>
-      <a name="width" val="32"/>
-    </comp>
     <comp lib="0" loc="(2340,860)" name="Tunnel">
       <a name="label" val="RDY"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
@@ -534,6 +517,11 @@ c4 0 24 8b ee 1 60 30
       <a name="width" val="32"/>
     </comp>
     <comp lib="0" loc="(2400,350)" name="Tunnel">
+      <a name="label" val="RX"/>
+      <a name="labelfont" val="Source Code Pro bold 16"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(2400,380)" name="Tunnel">
       <a name="label" val="PC"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
       <a name="width" val="32"/>
@@ -757,7 +745,7 @@ f8010113 112223 212423 312623 412823 512a23 612c23 712e23
 f706b3 e6b5b3 78713 fc0594e3 68793 100513 78593 73
 f706b3 e6b5b3 78713 fa0594e3 fe1ff06f 65339*0 8004117 10010113
 fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
-3042a073 8000293 3002a073 30200073
+3042a073 8000293 3002a073 30046073 30200073
 </a>
       <a name="dataWidth" val="32"/>
     </comp>
@@ -941,15 +929,14 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
     <wire from="(2150,270)" to="(2170,270)"/>
     <wire from="(2150,290)" to="(2170,290)"/>
     <wire from="(2150,310)" to="(2170,310)"/>
+    <wire from="(2150,330)" to="(2170,330)"/>
+    <wire from="(2150,350)" to="(2170,350)"/>
     <wire from="(2150,500)" to="(2170,500)"/>
     <wire from="(2150,520)" to="(2170,520)"/>
     <wire from="(2150,540)" to="(2170,540)"/>
     <wire from="(2150,560)" to="(2170,560)"/>
     <wire from="(2150,580)" to="(2170,580)"/>
     <wire from="(2150,600)" to="(2170,600)"/>
-    <wire from="(2240,640)" to="(2240,650)"/>
-    <wire from="(2280,640)" to="(2280,650)"/>
-    <wire from="(2320,640)" to="(2320,650)"/>
     <wire from="(2330,860)" to="(2340,860)"/>
     <wire from="(2330,890)" to="(2340,890)"/>
     <wire from="(2330,930)" to="(2340,930)"/>
@@ -960,6 +947,7 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
     <wire from="(2390,290)" to="(2400,290)"/>
     <wire from="(2390,320)" to="(2400,320)"/>
     <wire from="(2390,350)" to="(2400,350)"/>
+    <wire from="(2390,380)" to="(2400,380)"/>
     <wire from="(310,230)" to="(310,740)"/>
     <wire from="(310,230)" to="(460,230)"/>
     <wire from="(310,740)" to="(320,740)"/>
@@ -6930,9 +6918,9 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="791" y="174">CSR_ID</text>
       <rect height="4" stroke="none" width="10" x="800" y="168"/>
       <rect height="4" stroke="none" width="10" x="800" y="188"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="791" y="194">CSR_BS</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="791" y="194">CSR_BIT</text>
       <rect height="4" stroke="none" width="10" x="800" y="208"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="791" y="214">CSR_BC</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="791" y="214">CSR_CLR</text>
       <rect height="4" stroke="none" width="10" x="70" y="168"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="89" y="174">SX</text>
       <rect height="4" stroke="none" width="10" x="70" y="188"/>
@@ -6971,14 +6959,13 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <polyline fill="none" points="491,305 610,305" stroke="#000000"/>
       <rect height="10" stroke="none" width="4" x="468" y="330"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="470" y="319">JMP</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="791" y="234">ILL</text>
-      <rect height="4" stroke="none" width="10" x="800" y="228"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="791" y="274">ILL</text>
+      <rect height="4" stroke="none" width="10" x="800" y="268"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="740" y="319">SYS/BRK/WFI/RET</text>
       <rect height="10" stroke="none" width="4" x="708" y="330"/>
       <rect height="10" stroke="none" width="4" x="728" y="330"/>
       <rect height="10" stroke="none" width="4" x="748" y="330"/>
       <rect height="10" stroke="none" width="4" x="768" y="330"/>
-      <visible-register height="16" path="/Register(1740,1140)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="347" y="287"/>
       <visible-register height="16" path="/Register(840,570)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="21" x="100" y="287"/>
       <visible-register height="16" path="/Register(1080,570)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="21" x="140" y="287"/>
       <visible-register height="16" path="/Register(1330,570)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="21" x="180" y="287"/>
@@ -6990,13 +6977,17 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <visible-led height="10" path="/LED(1000,1420)" stroke-width="0" width="10" x="425" y="205"/>
       <visible-led height="10" path="/LED(1000,1440)" stroke-width="0" width="10" x="405" y="205"/>
       <visible-led height="10" path="/LED(1000,1460)" stroke-width="0" width="10" x="385" y="205"/>
-      <visible-led height="10" path="/LED(1600,1350)" stroke-width="0" width="10" x="565" y="290"/>
       <visible-led height="10" path="/LED(1350,1410)" stroke-width="0" width="10" x="455" y="235"/>
       <visible-led height="10" path="/LED(1350,1450)" stroke-width="0" width="10" x="415" y="235"/>
+      <rect height="4" stroke="none" width="10" x="800" y="228"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="791" y="234">CSR_SEL</text>
+      <rect height="4" stroke="none" width="10" x="800" y="248"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="791" y="254">CSR_IMM</text>
       <circ-anchor facing="east" height="6" width="6" x="77" y="127"/>
       <circ-port height="10" pin="1040,620" width="10" x="145" y="335"/>
       <circ-port height="10" pin="1180,1020" width="10" x="65" y="225"/>
       <circ-port height="10" pin="1180,1050" width="10" x="65" y="245"/>
+      <circ-port height="10" pin="1180,1110" width="10" x="805" y="225"/>
       <circ-port height="10" pin="1180,1140" width="10" x="805" y="185"/>
       <circ-port height="10" pin="1180,1170" width="10" x="805" y="205"/>
       <circ-port height="10" pin="1180,750" width="10" x="425" y="335"/>
@@ -7011,19 +7002,20 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <circ-port height="10" pin="1290,1370" width="10" x="65" y="265"/>
       <circ-port height="10" pin="1290,620" width="10" x="185" y="335"/>
       <circ-port height="10" pin="1550,620" width="10" x="805" y="165"/>
-      <circ-port height="10" pin="1700,1190" width="10" x="385" y="335"/>
+      <circ-port height="10" pin="1570,1400" width="10" x="805" y="245"/>
+      <circ-port height="10" pin="1670,1180" width="10" x="385" y="335"/>
       <circ-port height="10" pin="1860,560" width="10" x="745" y="335"/>
       <circ-port height="10" pin="1860,600" width="10" x="705" y="335"/>
       <circ-port height="10" pin="1860,640" width="10" x="765" y="335"/>
       <circ-port height="10" pin="1860,680" width="10" x="725" y="335"/>
-      <circ-port height="10" pin="1920,980" width="10" x="805" y="225"/>
+      <circ-port height="10" pin="1920,980" width="10" x="805" y="265"/>
       <circ-port height="10" pin="800,620" width="10" x="105" y="335"/>
       <circ-port height="8" pin="1150,1360" width="8" x="666" y="336"/>
       <circ-port height="8" pin="1270,1440" width="8" x="226" y="336"/>
       <circ-port height="8" pin="1270,1470" width="8" x="626" y="336"/>
-      <circ-port height="8" pin="1480,1300" width="8" x="506" y="336"/>
-      <circ-port height="8" pin="1480,1330" width="8" x="546" y="336"/>
-      <circ-port height="8" pin="1480,1360" width="8" x="586" y="336"/>
+      <circ-port height="8" pin="1480,1270" width="8" x="506" y="336"/>
+      <circ-port height="8" pin="1480,1300" width="8" x="546" y="336"/>
+      <circ-port height="8" pin="1480,1330" width="8" x="586" y="336"/>
       <circ-port height="8" pin="540,1300" width="8" x="66" y="146"/>
     </appear>
     <comp lib="0" loc="(1000,1020)" name="Tunnel">
@@ -7169,9 +7161,12 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="label" val="CSR"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
     </comp>
-    <comp lib="0" loc="(1180,1110)" name="Tunnel">
-      <a name="label" val="CSRI"/>
+    <comp lib="0" loc="(1180,1110)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="CSR_SEL"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
+      <a name="output" val="true"/>
     </comp>
     <comp lib="0" loc="(1180,1140)" name="Pin">
       <a name="appearance" val="NewPins"/>
@@ -7376,17 +7371,17 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="label" val="S4_1_0"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
     </comp>
-    <comp lib="0" loc="(1480,1300)" name="Pin">
+    <comp lib="0" loc="(1480,1270)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="label" val="EQ"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
     </comp>
-    <comp lib="0" loc="(1480,1330)" name="Pin">
+    <comp lib="0" loc="(1480,1300)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="label" val="LT"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
     </comp>
-    <comp lib="0" loc="(1480,1360)" name="Pin">
+    <comp lib="0" loc="(1480,1330)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="label" val="LTU"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
@@ -7416,7 +7411,7 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="label" val="S30_20"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
     </comp>
-    <comp lib="0" loc="(1490,1260)" name="Tunnel">
+    <comp lib="0" loc="(1490,1230)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="P14_12"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
@@ -7506,7 +7501,7 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="incoming" val="19"/>
       <a name="spacing" val="2"/>
     </comp>
-    <comp lib="0" loc="(1500,1260)" name="Splitter">
+    <comp lib="0" loc="(1500,1230)" name="Splitter">
       <a name="facing" val="south"/>
       <a name="fanout" val="3"/>
       <a name="incoming" val="3"/>
@@ -7523,6 +7518,12 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="label" val="P24_21"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
       <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(1510,1400)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="P19_15"/>
+      <a name="labelfont" val="Source Code Pro bold 16"/>
+      <a name="width" val="5"/>
     </comp>
     <comp lib="0" loc="(1510,710)" name="Splitter">
       <a name="facing" val="north"/>
@@ -7578,17 +7579,25 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="labelfont" val="Source Code Pro bold 16"/>
       <a name="width" val="6"/>
     </comp>
+    <comp lib="0" loc="(1560,1400)" name="Bit Extender">
+      <a name="in_width" val="5"/>
+      <a name="out_width" val="32"/>
+      <a name="type" val="zero"/>
+    </comp>
     <comp lib="0" loc="(1560,860)" name="Splitter">
       <a name="appear" val="right"/>
       <a name="facing" val="south"/>
       <a name="fanout" val="6"/>
       <a name="incoming" val="6"/>
     </comp>
-    <comp lib="0" loc="(1570,1210)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="P19_15"/>
+    <comp lib="0" loc="(1570,1400)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="CSR_IMM"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
-      <a name="width" val="5"/>
+      <a name="output" val="true"/>
+      <a name="radix" val="16"/>
+      <a name="width" val="32"/>
     </comp>
     <comp lib="0" loc="(1570,590)" name="Constant">
       <a name="facing" val="north"/>
@@ -7607,11 +7616,6 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="facing" val="east"/>
       <a name="label" val="X11"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
-    </comp>
-    <comp lib="0" loc="(1620,1210)" name="Bit Extender">
-      <a name="in_width" val="5"/>
-      <a name="out_width" val="32"/>
-      <a name="type" val="zero"/>
     </comp>
     <comp lib="0" loc="(1630,1180)" name="Splitter">
       <a name="appear" val="right"/>
@@ -7650,17 +7654,12 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="incoming" val="32"/>
       <a name="spacing" val="8"/>
     </comp>
-    <comp lib="0" loc="(1640,1270)" name="Tunnel">
+    <comp lib="0" loc="(1640,1240)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="P30"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
     </comp>
-    <comp lib="0" loc="(1650,1220)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="CSRI"/>
-      <a name="labelfont" val="Source Code Pro bold 16"/>
-    </comp>
-    <comp lib="0" loc="(1700,1190)" name="Pin">
+    <comp lib="0" loc="(1670,1180)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="IMM"/>
@@ -7669,16 +7668,16 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="radix" val="16"/>
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(1700,1300)" name="Tunnel">
+    <comp lib="0" loc="(1680,1150)" name="Constant">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="0" loc="(1700,1270)" name="Tunnel">
       <a name="label" val="COND"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
     </comp>
-    <comp lib="0" loc="(1700,1360)" name="Tunnel">
+    <comp lib="0" loc="(1700,1330)" name="Tunnel">
       <a name="label" val="BR"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
-    </comp>
-    <comp lib="0" loc="(1720,1160)" name="Constant">
-      <a name="facing" val="north"/>
     </comp>
     <comp lib="0" loc="(1740,1010)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -8278,11 +8277,11 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="size" val="30"/>
       <a name="width" val="6"/>
     </comp>
-    <comp lib="1" loc="(1610,1350)" name="AND Gate">
+    <comp lib="1" loc="(1610,1320)" name="AND Gate">
       <a name="facing" val="west"/>
       <a name="size" val="30"/>
     </comp>
-    <comp lib="1" loc="(1640,1310)" name="XOR Gate">
+    <comp lib="1" loc="(1640,1280)" name="XOR Gate">
       <a name="size" val="30"/>
     </comp>
     <comp lib="1" loc="(1810,1030)" name="OR Gate">
@@ -8356,7 +8355,7 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="labelfont" val="Source Code Pro bold 16"/>
       <a name="outputs" val="9"/>
     </comp>
-    <comp lib="2" loc="(1530,1310)" name="Multiplexer">
+    <comp lib="2" loc="(1530,1280)" name="Multiplexer">
       <a name="selloc" val="tr"/>
     </comp>
     <comp lib="2" loc="(1560,1010)" name="Multiplexer">
@@ -8366,13 +8365,10 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
     <comp lib="2" loc="(1560,1090)" name="Multiplexer">
       <a name="width" val="11"/>
     </comp>
-    <comp lib="2" loc="(1570,1320)" name="Multiplexer">
+    <comp lib="2" loc="(1570,1290)" name="Multiplexer">
       <a name="selloc" val="tr"/>
     </comp>
-    <comp lib="2" loc="(1670,1190)" name="Multiplexer">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="2" loc="(1690,1300)" name="Multiplexer"/>
+    <comp lib="2" loc="(1690,1270)" name="Multiplexer"/>
     <comp lib="4" loc="(1080,570)" name="Register">
       <a name="appearance" val="classic"/>
       <a name="label" val="V_RS1"/>
@@ -8398,10 +8394,11 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
       <a name="trigger" val="high"/>
       <a name="width" val="12"/>
     </comp>
-    <comp lib="4" loc="(1740,1140)" name="Register">
+    <comp lib="4" loc="(1700,1130)" name="Register">
       <a name="appearance" val="classic"/>
       <a name="label" val="V_IMM"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
+      <a name="labelloc" val="east"/>
       <a name="trigger" val="high"/>
       <a name="width" val="32"/>
     </comp>
@@ -8436,10 +8433,10 @@ fffc0297 f828293 30529073 fffc0297 29c28293 34129073 12b7 80028293
 800e0 6*800000 18002c 800a0 10*800000 80000 800000 800000
 4803e0 4*800000 4810a0 800000 800000 800000 1000ae 800e0
 6*800000 10002e 800a0 10*800000 80000 800000 800000 4803e0
-980a0 7*800000 800aa 800e0 6*800000 18002a 800a0 10*800000
-80000 800000 800000 4803e0 b80a0 7*800000 800ab 800e0
+98020 7*800000 800aa 800e0 6*800000 18002a 800a0 10*800000
+80000 800000 800000 4803e0 b8020 7*800000 800ab 800e0
 6*800000 18002b 800a0 10*800000 80000 800000 800000 4803e0
-f80a0 800000 800000 800000 480ca0 800000 800000 80000
+f8020 800000 800000 800000 480ca0 800000 800000 80000
 800a0 800e0 800000 800000 482080 800000 800000 800000
 180022 800a0 10*800000 80000 4803a0 800000 4803e0 680000
 800000 800000 800000 4814a0 800000 800000 80000 800000
@@ -8452,10 +8449,10 @@ f80a0 800000 800000 800000 480ca0 800000 800000 80000
 800000 800000 800000 800ac 800e0 6*800000 180026 800a0
 10*800000 80000 800000 800000 4803e0 4*800000 4810a0 4*800000
 800e0 6*800000 180027 800a0 10*800000 80000 800000 800000
-4803e0 980a0 7*800000 800aa 800e0 6*800000 180028 800a0
-10*800000 80000 800000 800000 4803e0 b80a0 7*800000 800ab
+4803e0 98020 7*800000 800aa 800e0 6*800000 180028 800a0
+10*800000 80000 800000 800000 4803e0 b8020 7*800000 800ab
 800e0 6*800000 180029 800a0 10*800000 80000 800000 800000
-4803e0 f80a0 800000 800000 800000 480ca0 800000 800000
+4803e0 f8020 800000 800000 800000 480ca0 800000 800000
 80000 800a0 800e0 800000 800000 482080 800000 800000
 800000 180021 800a0 10*800000 4801c0 4803a0 800000 4803e0
 4*800000 4814a0 800000 800000 80000 800000 800e0 800000
@@ -8467,10 +8464,10 @@ f80a0 800000 800000 800000 480ca0 800000 800000 80000
 800000 800000 800ac 800e0 7*800000 800a0 10*800000 4801c0
 800000 800000 4803e0 4*800000 4810a0 800000 800000 800000
 1000af 800e0 6*800000 10002f 800a0 10*800000 4801c0 800000
-800000 4803e0 980a0 7*800000 800aa 800e0 7*800000 800a0
-10*800000 4801c0 800000 800000 4803e0 b80a0 7*800000 800ab
+800000 4803e0 98020 7*800000 800aa 800e0 7*800000 800a0
+10*800000 4801c0 800000 800000 4803e0 b8020 7*800000 800ab
 800e0 7*800000 800a0 10*800000 4801c0 800000 800000 4803e0
-f80a0 800000 800000 800000 480ca0 800000 800000 80000
+f8020 800000 800000 800000 480ca0 800000 800000 80000
 800a0 800e0 800000 800000 482080 4*800000 800a0 10*800000
 4801c0 4803a0 800000 4803e0 4*800000 4814a0 800000 800000
 80000 800000 800e0 800000 800000 484080 4*800000 800a0
@@ -8481,10 +8478,10 @@ f80a0 800000 800000 800000 480ca0 800000 800000 80000
 800000 800000 4808a0 800000 800000 800000 800ac 800e0
 7*800000 800a0 10*800000 4801c0 800000 800000 4803e0 4*800000
 4810a0 4*800000 800e0 7*800000 800a0 10*800000 4801c0 800000
-800000 4803e0 980a0 7*800000 800aa 800e0 7*800000 800a0
-10*800000 4801c0 800000 800000 4803e0 b80a0 7*800000 800ab
+800000 4803e0 98020 7*800000 800aa 800e0 7*800000 800a0
+10*800000 4801c0 800000 800000 4803e0 b8020 7*800000 800ab
 800e0 7*800000 800a0 10*800000 4801c0 800000 800000 4803e0
-f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
+f8020 800000 800000 800000 80000 7*800000 80000 15*800000
 80000 80000 800000 80000 680000 800000 800000 800000
 80000 7*800000 80000 15*800000 80000 800000 800000 80000
 4*800000 80000 7*800000 80000 18*800000 80000 31*800000 80000
@@ -8554,7 +8551,7 @@ f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
       <a name="label" val="S0"/>
       <a name="labelfont" val="Source Code Pro bold 16"/>
     </comp>
-    <comp lib="5" loc="(1600,1350)" name="LED">
+    <comp lib="5" loc="(1600,1320)" name="LED">
       <a name="facing" val="east"/>
       <a name="label" val="COND"/>
       <a name="labelfont" val="Source Code Pro plain 16"/>
@@ -8673,9 +8670,9 @@ f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
     <wire from="(1460,810)" to="(1470,810)"/>
     <wire from="(1470,690)" to="(1480,690)"/>
     <wire from="(1470,810)" to="(1480,810)"/>
-    <wire from="(1480,1300)" to="(1500,1300)"/>
-    <wire from="(1480,1330)" to="(1490,1330)"/>
-    <wire from="(1480,1360)" to="(1530,1360)"/>
+    <wire from="(1480,1270)" to="(1500,1270)"/>
+    <wire from="(1480,1300)" to="(1490,1300)"/>
+    <wire from="(1480,1330)" to="(1530,1330)"/>
     <wire from="(1480,640)" to="(1490,640)"/>
     <wire from="(1480,690)" to="(1490,690)"/>
     <wire from="(1480,810)" to="(1490,810)"/>
@@ -8683,9 +8680,9 @@ f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
     <wire from="(1490,1110)" to="(1500,1110)"/>
     <wire from="(1490,1140)" to="(1500,1140)"/>
     <wire from="(1490,1170)" to="(1540,1170)"/>
-    <wire from="(1490,1260)" to="(1500,1260)"/>
-    <wire from="(1490,1320)" to="(1490,1330)"/>
-    <wire from="(1490,1320)" to="(1500,1320)"/>
+    <wire from="(1490,1230)" to="(1500,1230)"/>
+    <wire from="(1490,1290)" to="(1490,1300)"/>
+    <wire from="(1490,1290)" to="(1500,1290)"/>
     <wire from="(1490,610)" to="(1500,610)"/>
     <wire from="(1490,630)" to="(1490,640)"/>
     <wire from="(1490,630)" to="(1500,630)"/>
@@ -8700,7 +8697,8 @@ f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
     <wire from="(1500,730)" to="(1520,730)"/>
     <wire from="(1500,770)" to="(1520,770)"/>
     <wire from="(1500,880)" to="(1510,880)"/>
-    <wire from="(1510,1280)" to="(1510,1290)"/>
+    <wire from="(1510,1250)" to="(1510,1260)"/>
+    <wire from="(1510,1400)" to="(1520,1400)"/>
     <wire from="(1510,710)" to="(1520,710)"/>
     <wire from="(1510,790)" to="(1520,790)"/>
     <wire from="(1510,880)" to="(1520,880)"/>
@@ -8709,9 +8707,9 @@ f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
     <wire from="(1520,1080)" to="(1530,1080)"/>
     <wire from="(1520,1100)" to="(1530,1100)"/>
     <wire from="(1520,880)" to="(1530,880)"/>
-    <wire from="(1530,1310)" to="(1540,1310)"/>
-    <wire from="(1530,1330)" to="(1530,1360)"/>
-    <wire from="(1530,1330)" to="(1540,1330)"/>
+    <wire from="(1530,1280)" to="(1540,1280)"/>
+    <wire from="(1530,1300)" to="(1530,1330)"/>
+    <wire from="(1530,1300)" to="(1540,1300)"/>
     <wire from="(1530,620)" to="(1540,620)"/>
     <wire from="(1530,880)" to="(1540,880)"/>
     <wire from="(1540,1110)" to="(1540,1170)"/>
@@ -8721,45 +8719,40 @@ f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
     <wire from="(1540,880)" to="(1550,880)"/>
     <wire from="(1540,930)" to="(1540,950)"/>
     <wire from="(1540,970)" to="(1540,990)"/>
-    <wire from="(1550,1280)" to="(1550,1300)"/>
+    <wire from="(1550,1250)" to="(1550,1270)"/>
     <wire from="(1550,720)" to="(1560,720)"/>
     <wire from="(1550,780)" to="(1570,780)"/>
     <wire from="(1550,840)" to="(1570,840)"/>
     <wire from="(1560,1010)" to="(1610,1010)"/>
     <wire from="(1560,1090)" to="(1610,1090)"/>
+    <wire from="(1560,1400)" to="(1570,1400)"/>
     <wire from="(1560,720)" to="(1560,760)"/>
     <wire from="(1560,760)" to="(1570,760)"/>
     <wire from="(1560,860)" to="(1570,860)"/>
-    <wire from="(1570,1210)" to="(1580,1210)"/>
-    <wire from="(1570,1320)" to="(1600,1320)"/>
-    <wire from="(1590,1280)" to="(1590,1300)"/>
-    <wire from="(1590,1300)" to="(1600,1300)"/>
+    <wire from="(1570,1290)" to="(1600,1290)"/>
+    <wire from="(1590,1250)" to="(1590,1270)"/>
+    <wire from="(1590,1270)" to="(1600,1270)"/>
     <wire from="(1600,1170)" to="(1610,1170)"/>
-    <wire from="(1600,1350)" to="(1610,1350)"/>
+    <wire from="(1600,1320)" to="(1610,1320)"/>
     <wire from="(1600,690)" to="(1610,690)"/>
     <wire from="(1600,770)" to="(1610,770)"/>
     <wire from="(1600,850)" to="(1610,850)"/>
     <wire from="(1600,930)" to="(1610,930)"/>
-    <wire from="(1620,1210)" to="(1630,1210)"/>
-    <wire from="(1630,1180)" to="(1640,1180)"/>
-    <wire from="(1630,1200)" to="(1630,1210)"/>
-    <wire from="(1630,1200)" to="(1640,1200)"/>
-    <wire from="(1640,1270)" to="(1650,1270)"/>
+    <wire from="(1630,1180)" to="(1650,1180)"/>
+    <wire from="(1640,1240)" to="(1650,1240)"/>
+    <wire from="(1640,1280)" to="(1650,1280)"/>
     <wire from="(1640,1310)" to="(1650,1310)"/>
-    <wire from="(1640,1340)" to="(1650,1340)"/>
-    <wire from="(1640,1360)" to="(1670,1360)"/>
-    <wire from="(1650,1210)" to="(1650,1220)"/>
-    <wire from="(1650,1270)" to="(1650,1290)"/>
-    <wire from="(1650,1290)" to="(1660,1290)"/>
-    <wire from="(1650,1310)" to="(1650,1340)"/>
-    <wire from="(1650,1310)" to="(1660,1310)"/>
-    <wire from="(1670,1190)" to="(1690,1190)"/>
-    <wire from="(1670,1320)" to="(1670,1360)"/>
-    <wire from="(1670,1360)" to="(1700,1360)"/>
-    <wire from="(1690,1140)" to="(1690,1190)"/>
-    <wire from="(1690,1140)" to="(1710,1140)"/>
-    <wire from="(1690,1190)" to="(1700,1190)"/>
-    <wire from="(1690,1300)" to="(1700,1300)"/>
+    <wire from="(1640,1330)" to="(1670,1330)"/>
+    <wire from="(1650,1130)" to="(1650,1180)"/>
+    <wire from="(1650,1130)" to="(1670,1130)"/>
+    <wire from="(1650,1180)" to="(1670,1180)"/>
+    <wire from="(1650,1240)" to="(1650,1260)"/>
+    <wire from="(1650,1260)" to="(1660,1260)"/>
+    <wire from="(1650,1280)" to="(1650,1310)"/>
+    <wire from="(1650,1280)" to="(1660,1280)"/>
+    <wire from="(1670,1290)" to="(1670,1330)"/>
+    <wire from="(1670,1330)" to="(1700,1330)"/>
+    <wire from="(1690,1270)" to="(1700,1270)"/>
     <wire from="(1740,1010)" to="(1780,1010)"/>
     <wire from="(1740,1040)" to="(1750,1040)"/>
     <wire from="(1740,1070)" to="(1810,1070)"/>
@@ -9209,70 +9202,71 @@ f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="394">EIE</text>
       <rect height="4" stroke="none" width="10" x="90" y="368"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="374">TRAP</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="228">mie</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="308">mscratch</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="348">mepc</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="388">mcause</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="273">mie</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="353">mscratch</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="393">mepc</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="433">mcause</text>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="159">WR</text>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="434">CAUSE</text>
       <rect height="4" stroke="none" width="10" x="90" y="428"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="454">EPC</text>
       <rect height="4" stroke="none" width="10" x="90" y="448"/>
       <rect height="4" stroke="none" width="10" x="90" y="98"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="104">CSR_EN</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="104">EN</text>
       <rect height="4" stroke="none" width="10" x="90" y="118"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="124">CSR_ID</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="144">CSR_BS</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="124">ID</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="144">BIT</text>
       <rect height="4" stroke="none" width="10" x="90" y="138"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="164">CSR_BC</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="164">CLR</text>
       <rect height="4" stroke="none" width="10" x="90" y="158"/>
       <rect height="4" stroke="none" width="10" x="90" y="468"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="474">ILL</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="184">ILL_IN</text>
-      <rect height="4" stroke="none" width="10" x="90" y="178"/>
-      <rect height="10" stroke="none" width="4" x="238" y="500"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="240" y="489">IMM</text>
-      <rect height="4" stroke="none" width="10" x="300" y="218"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="224">ILL'</text>
+      <rect height="4" stroke="none" width="10" x="90" y="218"/>
+      <rect height="4" stroke="none" width="10" x="300" y="248"/>
       <rect height="4" stroke="none" width="10" x="300" y="98"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="291" y="194">CSR</text>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="291" y="164">LDCSR</text>
       <rect height="4" stroke="none" width="10" x="300" y="188"/>
       <rect height="4" stroke="none" width="10" x="300" y="158"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="291" y="224">PC</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="291" y="254">PC</text>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="291" y="104">CLK</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="160" y="489">REG</text>
-      <rect height="10" stroke="none" width="4" x="158" y="500"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="489">SEL</text>
-      <rect height="10" stroke="none" width="4" x="198" y="500"/>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="188">mstatus</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="180" y="444">MIE</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="220" y="444">MPIE</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="233">mstatus</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="180" y="484">MIE</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="220" y="484">MPIE</text>
       <rect height="4" stroke="none" width="10" x="90" y="308"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="314">IRET</text>
-      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="268">mtvec</text>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="313">mtvec</text>
       <rect height="4" stroke="none" width="10" x="300" y="128"/>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="291" y="134">RST</text>
       <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="414">ISR</text>
       <rect height="4" stroke="none" width="10" x="90" y="408"/>
-      <visible-led height="10" path="/LED(360,750)" stroke-width="0" width="10" x="175" y="480"/>
+      <visible-led height="10" path="/LED(360,750)" stroke-width="0" width="10" x="160" y="175"/>
       <visible-register height="16" path="/Register(410,930)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="32" x="184" y="112"/>
-      <visible-led height="10" path="/LED(420,750)" stroke-width="0" width="10" x="215" y="480"/>
+      <visible-led height="10" path="/LED(420,750)" stroke-width="0" width="10" x="230" y="175"/>
       <visible-led height="10" path="/LED(650,840)" stroke-width="0" width="10" x="195" y="135"/>
-      <visible-led height="10" path="/LED(380,540)" stroke-width="0" width="10" x="175" y="420"/>
-      <visible-led height="10" path="/LED(380,560)" stroke-width="0" width="10" x="215" y="420"/>
-      <visible-register height="16" path="/Register(440,200)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="457"/>
-      <visible-register height="16" path="/Register(780,130)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="192"/>
-      <visible-register height="16" path="/Register(780,260)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="232"/>
-      <visible-register height="16" path="/Register(780,390)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="312"/>
-      <visible-register height="16" path="/Register(780,520)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="352"/>
-      <visible-register height="16" path="/Register(780,650)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="392"/>
-      <visible-register height="16" path="/Register(1130,390)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="272"/>
-      <visible-led height="10" path="/LED(1420,740)" stroke-width="0" width="10" x="250" y="195"/>
-      <visible-led height="10" path="/LED(1420,760)" stroke-width="0" width="10" x="250" y="235"/>
-      <visible-led height="10" path="/LED(1420,780)" stroke-width="0" width="10" x="250" y="275"/>
-      <visible-led height="10" path="/LED(1420,800)" stroke-width="0" width="10" x="250" y="315"/>
-      <visible-led height="10" path="/LED(1420,820)" stroke-width="0" width="10" x="250" y="355"/>
-      <visible-led height="10" path="/LED(1420,840)" stroke-width="0" width="10" x="250" y="395"/>
+      <visible-led height="10" path="/LED(380,540)" stroke-width="0" width="10" x="175" y="460"/>
+      <visible-led height="10" path="/LED(380,560)" stroke-width="0" width="10" x="215" y="460"/>
+      <visible-register height="16" path="/Register(440,200)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="192"/>
+      <visible-register height="16" path="/Register(780,130)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="237"/>
+      <visible-register height="16" path="/Register(780,260)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="277"/>
+      <visible-register height="16" path="/Register(780,390)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="357"/>
+      <visible-register height="16" path="/Register(780,520)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="397"/>
+      <visible-register height="16" path="/Register(780,650)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="437"/>
+      <visible-register height="16" path="/Register(1130,390)" stroke-width="0" value-font-family="Monospaced" value-font-size="16" width="85" x="158" y="317"/>
+      <visible-led height="10" path="/LED(1420,740)" stroke-width="0" width="10" x="250" y="240"/>
+      <visible-led height="10" path="/LED(1420,760)" stroke-width="0" width="10" x="250" y="280"/>
+      <visible-led height="10" path="/LED(1420,780)" stroke-width="0" width="10" x="250" y="320"/>
+      <visible-led height="10" path="/LED(1420,800)" stroke-width="0" width="10" x="250" y="360"/>
+      <visible-led height="10" path="/LED(1420,820)" stroke-width="0" width="10" x="250" y="400"/>
+      <visible-led height="10" path="/LED(1420,840)" stroke-width="0" width="10" x="250" y="440"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="184">SEL</text>
+      <rect height="4" stroke="none" width="10" x="90" y="178"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="start" x="110" y="204">IMM</text>
+      <rect height="4" stroke="none" width="10" x="90" y="198"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="end" x="291" y="224">REG</text>
+      <rect height="4" stroke="none" width="10" x="300" y="218"/>
+      <text dominant-baseline="alphabetic" fill="#404040" font-family="Source Code Pro" font-size="12" text-anchor="middle" x="200" y="184">REG/IMM</text>
       <circ-anchor facing="east" height="6" width="6" x="97" y="77"/>
       <circ-port height="10" pin="1230,420" width="10" x="85" y="405"/>
       <circ-port height="10" pin="1250,930" width="10" x="85" y="465"/>
@@ -9281,16 +9275,16 @@ f80a0 800000 800000 800000 80000 7*800000 80000 15*800000
       <circ-port height="10" pin="410,510" width="10" x="85" y="385"/>
       <circ-port height="10" pin="640,890" width="10" x="305" y="155"/>
       <circ-port height="8" pin="1030,410" width="8" x="306" y="126"/>
-      <circ-port height="8" pin="1190,950" width="8" x="86" y="176"/>
+      <circ-port height="8" pin="1190,950" width="8" x="86" y="216"/>
       <circ-port height="8" pin="340,340" width="8" x="86" y="156"/>
       <circ-port height="8" pin="340,630" width="8" x="86" y="306"/>
-      <circ-port height="8" pin="340,760" width="8" x="196" y="506"/>
+      <circ-port height="8" pin="340,760" width="8" x="86" y="176"/>
       <circ-port height="8" pin="350,870" width="8" x="86" y="116"/>
-      <circ-port height="8" pin="390,790" width="8" x="156" y="506"/>
-      <circ-port height="8" pin="390,820" width="8" x="236" y="506"/>
+      <circ-port height="8" pin="390,790" width="8" x="306" y="216"/>
+      <circ-port height="8" pin="390,820" width="8" x="86" y="196"/>
       <circ-port height="8" pin="500,870" width="8" x="86" y="136"/>
       <circ-port height="8" pin="500,900" width="8" x="86" y="96"/>
-      <circ-port height="8" pin="660,560" width="8" x="306" y="216"/>
+      <circ-port height="8" pin="660,560" width="8" x="306" y="246"/>
       <circ-port height="8" pin="660,680" width="8" x="86" y="426"/>
       <circ-port height="8" pin="660,710" width="8" x="86" y="366"/>
       <circ-port height="8" pin="660,740" width="8" x="306" y="96"/>
