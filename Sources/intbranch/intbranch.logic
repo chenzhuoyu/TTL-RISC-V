@@ -1,0 +1,15 @@
+Generate branch control signals for Interrupt Controller.
+
+device:
+    GAL22V10
+
+pins:
+    GND SYS BRK EIE TRG IRG RDI WFI JMP RET RST _
+    _   IRQ RDY SET TRP _   _   _   _   _   _   VCC
+
+define:
+    TRP = RST | IRG | SYS | BRK
+    SET = RET | TRP | JMP
+    EXT = EIE & TRG & ~(RET | TRP)
+    RDY = RDI & (EXT | ~WFI)
+    IRQ = EXT | RST

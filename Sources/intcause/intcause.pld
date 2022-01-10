@@ -1,0 +1,39 @@
+GAL22V10
+22V10
+
+NC  NC  NC  NC  SYS BRK TRG LDR EAM EPL ILL GND 
+NC  IRQ C31 C3  C2  C1  C0  NC  NC  NC  NC  VCC 
+
+IRQ = EAM + EPL + ILL
+C31 = TRG * /BRK * /EAM * /EPL * /ILL * /SYS
+C3 = SYS * /EPL * /ILL + TRG * /BRK * /EAM * /EPL * /ILL
+C2 = EAM * /BRK * /EPL * /ILL * /SYS
+C1 = ILL + BRK * /EPL + SYS * /EPL + EAM * LDR * /EPL + TRG * /EAM * /EPL
+C0 = BRK * /EPL * /ILL + SYS * /EPL * /ILL + TRG * /EAM * /EPL * /ILL
+
+DESCRIPTION
+Prioritized interrupt cause decoder.
+
+STATISTICS
+    Terms        = 15
+    Unique Terms = 13
+
+LOGISIM-PLA-FUSE
+    ILL  EPL  EAM  LDR  TRG  BRK  SYS  |  IRQ  C31  C3  C2  C1  C0
+    --------------------------------------------------------------
+    · ·  · ·  · X  · ·  · ·  · ·  · ·  |  X    ·    ·   ·   ·   ·
+    · ·  · X  · ·  · ·  · ·  · ·  · ·  |  X    ·    ·   ·   ·   ·
+    · X  · ·  · ·  · ·  · ·  · ·  · ·  |  X    ·    ·   ·   X   ·
+    X ·  X ·  X ·  · ·  · X  X ·  X ·  |  ·    X    ·   ·   ·   ·
+    X ·  X ·  · ·  · ·  · ·  · ·  · X  |  ·    ·    X   ·   ·   X
+    X ·  X ·  X ·  · ·  · X  X ·  · ·  |  ·    ·    X   ·   ·   ·
+    X ·  X ·  · X  · ·  · ·  X ·  X ·  |  ·    ·    ·   X   ·   ·
+    · ·  X ·  · ·  · ·  · ·  · X  · ·  |  ·    ·    ·   ·   X   ·
+    · ·  X ·  · ·  · ·  · ·  · ·  · X  |  ·    ·    ·   ·   X   ·
+    · ·  X ·  · X  · X  · ·  · ·  · ·  |  ·    ·    ·   ·   X   ·
+    · ·  X ·  X ·  · ·  · X  · ·  · ·  |  ·    ·    ·   ·   X   ·
+    X ·  X ·  · ·  · ·  · ·  · X  · ·  |  ·    ·    ·   ·   ·   X
+    X ·  X ·  X ·  · ·  · X  · ·  · ·  |  ·    ·    ·   ·   ·   X
+
+LOGISIM-PLA-ROM-CONTENT
+    0 0 2 0*5 2 0*5 2 0*6 1*3 0 2 1*4 0*4 2 1*3 0 2 1 0 1 1 2 0 0 1 1 0 1 0*3 2 0 0 1 0*4 2 0 1 2 2 0*4 1 1 0 2 0 0 1 1 0*3 2 0 1*3 0 2 0 0 1 0*5 1 0*5 1 0*3 1 0 0 1 0*6 1 0 0 1 0 0 1 0*6 1 0*6 1 0*5 1 0*5 1 0*5 1 0*6 1 0*5 1
