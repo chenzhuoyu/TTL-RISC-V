@@ -5,12 +5,12 @@ device:
 
 pins:
     GND P14 P13 P12 P6  P5  P4  P3  P2  EQ  LT  LTU
-    P30 C2  C1  C0  CR  CS  S2  S1  RD  _   _   VCC
+    _   C2  C1  C0  CR  CS  S2  S1  RD  _   _   VCC
 
 define:
     SI = P14 & (P13 | P12)
     CR = ((EQ & ~P14 | LT & P14 & ~P13 | LTU & P14 & P13) ^ P12) & B
-    CS = P30 & ~B | CR
+    CS = ~B | CR
     C0 = R | S | U
     C1 = I | S | J
     C2 = B | U | J
