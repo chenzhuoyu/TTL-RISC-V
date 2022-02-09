@@ -4,14 +4,19 @@ device:
     GAL22V10
 
 pins:
-    GND P14 P13 P12 P6  P5  P4  P3  P2  _   _   _
-    _   R   I   S   B   U   J   S1  S2  RD  _   VCC
+    GND P14 P13 P12 P6  P5  P4  P3  P2  EQ  LT  LTU
+    P30 C2  C1  C0  CR  CS  S2  S1  RD  _   _   VCC
 
 define:
-    CSI = P14 & (P13 | P12)
+    SI = P14 & (P13 | P12)
+    CR = ((EQ & ~P14 | LT & P14 & ~P13 | LTU & P14 & P13) ^ P12) & B
+    CS = P30 & ~B | CR
+    C0 = R | S | U
+    C1 = I | S | J
+    C2 = B | U | J
 
 table:
-    CSI P6  P5  P4  P3  P2  |   R   I   S   B   U   J   S1  S2  RD
+    SI  P6  P5  P4  P3  P2  |   R   I   S   B   U   J   S1  S2  RD
     0   0   0   0   0   0   |   0   1   0   0   0   0   1   0   1
     0   0   0   0   0   1   |   0   0   0   0   0   0   0   0   0
     0   0   0   0   1   0   |   0   0   0   0   0   0   0   0   0
