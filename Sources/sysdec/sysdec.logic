@@ -1,17 +1,17 @@
 SYSTEM sub-opcode decoder.
 
 device:
-    GAL22V10_14_8
+    GAL22V10_13_9
 
 pins:
-    GND V3  V2  V1  V0  S0  SYS P29 P28 P22 P21 P20
-    FN  IM1 IM0 ILL WFI RET BRK EMC _   _   _   VCC
+    GND V2  V1  V0  S0  SYS P29 P28 P22 P21 P20 FN
+    IM1 IM0 ILL WFI RET BRK EMC _   _   _   _   VCC
 
 no-opt:
     ILL
 
 define:
-    VLD = V3 | V2 | V1 | V0
+    VLD = V2 | V1 | V0
     ILL = FN & IM1 | SYS & IM0 | ~VLD | ERR
 
 table:
