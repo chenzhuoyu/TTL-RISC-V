@@ -4,21 +4,20 @@ device:
     GAL22V10
 
 pins:
-    GND P31 P20     P7      P6      P5  P4      P3      P2  _   _   _
-    _   X0  S4v1b0  S4v1b1  S10v5   X11 S19v12  S30v20  _   _   _   VCC
+    GND P31     P20     P13 P12     P7      P6      P5  P4  P3  P2  _
+    _   S30v20  S19v12  X11 S10v5   S4v1b1  S4v1b0  X0  _   _   _   VCC
 
 define:
-    I = (P2 & P5 & P6 & ~P3 & ~P4) | (P4 & P5 & P6 & ~P2 & ~P3) | (~P2 & ~P3 & ~P5 & ~P6) | (P2 & P3 & ~P4 & ~P5 & ~P6)
+    I = P2 & P5 & P6 & ~P3 & ~P4 | P4 & P5 & P6 & ~P2 & ~P3 | ~P2 & ~P3 & ~P5 & ~P6 | P2 & P3 & ~P4 & ~P5 & ~P6
     S = P5 & ~P2 & ~P3 & ~P4 & ~P6
     B = P5 & P6 & ~P2 & ~P3 & ~P4
     U = P2 & P4 & ~P3 & ~P6
     J = P2 & P3 & P5 & P6 & ~P4
 
-    X0  = (S & P7) | (I & P20)
-    X11 = (B & P7) | (J & P20) | (I & P31) | (S & P31)
-
-    S10v5  = I | S | B | J
-    S4v1b0 = I | J
-    S4v1b1 = S | B
-    S19v12 = U | J
     S30v20 = U
+    S19v12 = U | J
+    X11    = B & P7 | J & P20 | I & P31 | S & P31
+    S10v5  = (I | S | B | J) & (P13 | ~P12 | P6 | P5 | ~P4 | P3 | P2)
+    S4v1b1 = S | B
+    S4v1b0 = I | J
+    X0     = S & P7 | I & P20

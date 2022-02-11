@@ -1,0 +1,38 @@
+GAL22V10
+22V10
+
+P0  P1  P2  P3  P4  P5  P6  P12 P13 P14 CTR GND 
+NC  VLD SYS CLR BIT CSI CSE NC  NC  NC  NC  VCC 
+
+VLD  = /CTR * /P13 * /P14 * /P4 * /P5 * /P6 * P0 * P1 * P2 * P3 +
+       /CTR * /P2 * /P3 * P0 * P1 * P12 * P4 * P5 * P6 +
+       /CTR * /P2 * /P3 * P0 * P1 * P13 * P4 * P5 * P6 +
+       /P12 * /P13 * /P14 * /P2 * /P3 * P0 * P1 * P4 * P5 * P6
+SYS  = /P12 * /P13 * /P14 * /P2 * /P3 * P0 * P1 * P4 * P5 * P6
+CLR  = /CTR * /P2 * /P3 * P0 * P1 * P12 * P13 * P4 * P5 * P6
+BIT  = /CTR * /P2 * /P3 * P0 * P1 * P13 * P4 * P5 * P6
+CSI  = /CTR * /P2 * /P3 * P0 * P1 * P12 * P14 * P4 * P5 * P6 +
+       /CTR * /P2 * /P3 * P0 * P1 * P13 * P14 * P4 * P5 * P6
+CSE  = /CTR * /P2 * /P3 * P0 * P1 * P12 * P4 * P5 * P6 +
+       /CTR * /P2 * /P3 * P0 * P1 * P13 * P4 * P5 * P6
+
+DESCRIPTION
+Instruction Decoder -- CSR & SYSTEM instructions.
+
+STATISTICS
+    Terms        = 11
+    Unique Terms = 7
+
+LOGISIM-PLA-FUSE
+    CTR  P14  P13  P12  P6   P5   P4   P3   P2   P1   P0   |  VLD  SYS  CLR  BIT  CSI  CSE
+    --------------------------------------------------------------------------------------
+    X ·  · ·  · ·  · X  · X  · X  · X  X ·  X ·  · X  · X  |  X    ·    ·    ·    ·    X
+    X ·  · ·  · X  · ·  · X  · X  · X  X ·  X ·  · X  · X  |  X    ·    ·    X    ·    X
+    · ·  X ·  X ·  X ·  · X  · X  · X  X ·  X ·  · X  · X  |  X    X    ·    ·    ·    ·
+    X ·  X ·  X ·  · ·  X ·  X ·  X ·  · X  · X  · X  · X  |  X    ·    ·    ·    ·    ·
+    X ·  · ·  · X  · X  · X  · X  · X  X ·  X ·  · X  · X  |  ·    ·    X    ·    ·    ·
+    X ·  · X  · ·  · X  · X  · X  · X  X ·  X ·  · X  · X  |  ·    ·    ·    ·    X    ·
+    X ·  · X  · X  · ·  · X  · X  · X  X ·  X ·  · X  · X  |  ·    ·    ·    ·    X    ·
+
+LOGISIM-PLA-ROM-CONTENT
+    1 0 0 2*4 1 1 2 2 1 0 2 0 2*3 1 1 2 2 0 1*3 2*3 1 1 2 2 1*3 0 1*3 2*4 1 0 2*5 1 1 2 2 1 2 0 2*4 1 1 2 2 1 2 2 0 2*3 1 1 2 2 1 0*4 1 1 0 0 1 0 1*3 0*4 1 0*7 1 0*7 1 0*5 1 0

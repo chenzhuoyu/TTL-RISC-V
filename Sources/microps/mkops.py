@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -8-
 
+import os
+import subprocess
+
 ALU_ADD    = 0
 ALU_SUB    = 1
 ALU_MUL    = 2
@@ -44,7 +47,7 @@ X        = -1
 XXXXX    = -1
 
 OUT_BITS = 24
-ROM_SIZE = 1 << 11
+ROM_SIZE = 1 << 13
 
 bits = 0
 microps = [
@@ -69,9 +72,9 @@ def OP(name: str, s: int, c: int, f: int, f3: int, op: int, mop: int):
                 for k in range(2):
                     for v in range(8):
                         if s in (i, X) and c in (j, X) and f in (k, X) and f3 in (v, XXXXX):
-                            cc = (i << 10) | (j << 9) | (k << 8) | (v << 5) | op
+                            cc = (i << 12) | (j << 11) | (k << 10) | (v << 7) | (op << 2) | 0b11
                             if mop != SIGILL and not (microps[cc] & SIGILL):
-                                raise ValueError('%s: instruction was already assigned: %08x == %05x' % (name, cc, microps[cc]))
+                                raise ValueError('%s: instruction was already assigned: %04x == %06x' % (name, cc, microps[cc]))
                             else:
                                 microps[cc] = mop
 
@@ -86,6 +89,7 @@ OP('Bcc'    , 0, X, X, XXXXX, 0b11000, PCREL | OPIMM | BRANCH | HOLD)
 OP('Bcc'    , 1, X, X, XXXXX, 0b11000, 0)
 OP('Bcc'    , X, X, X, 0b010, 0b11000, SIGILL)
 OP('Bcc'    , X, X, X, 0b011, 0b11000, SIGILL)
+
 OP('LB'     , 0, X, X, 0b000, 0b00000, ALU_ADD | REG_WE | OPIMM | LDSX | LD0 | HOLD)
 OP('LB'     , 1, X, X, 0b000, 0b00000, 0)
 OP('LH'     , 0, X, X, 0b001, 0b00000, ALU_ADD | REG_WE | OPIMM | LDSX | LD1 | HOLD)
@@ -102,30 +106,28 @@ OP('SH'     , 0, X, X, 0b001, 0b01000, ALU_ADD | OPIMM | ST1 | HOLD)
 OP('SH'     , 1, X, X, 0b001, 0b01000, 0)
 OP('SW'     , 0, X, X, 0b010, 0b01000, ALU_ADD | OPIMM | ST0 | ST1 | HOLD)
 OP('SW'     , 1, X, X, 0b010, 0b01000, 0)
-OP('ADDI'   , 0, X, X, 0b000, 0b00100, ALU_ADD  | REG_WE | OPIMM)
-OP('SLTI'   , 0, X, X, 0b010, 0b00100, ALU_SLT  | REG_WE | OPIMM)
-OP('SLTIU'  , 0, X, X, 0b011, 0b00100, ALU_SLTU | REG_WE | OPIMM)
-OP('XORI'   , 0, X, X, 0b100, 0b00100, ALU_XOR  | REG_WE | OPIMM)
-OP('ORI'    , 0, X, X, 0b110, 0b00100, ALU_OR   | REG_WE | OPIMM)
-OP('ANDI'   , 0, X, X, 0b111, 0b00100, ALU_AND  | REG_WE | OPIMM)
-OP('SLLI'   , 0, 0, 0, 0b001, 0b00100, ALU_SHL  | REG_WE | OPIMM | SHIFT | FUNCT)
-OP('SRLI'   , 0, 0, 0, 0b101, 0b00100, ALU_SHR  | REG_WE | OPIMM | SHIFT | FUNCT)
-OP('SRAI'   , 0, 1, 0, 0b101, 0b00100, ALU_SAR  | REG_WE | OPIMM | SHIFT | FUNCT)
-OP('ADD'    , 0, 0, 0, 0b000, 0b01100, ALU_ADD  | REG_WE | FUNCT)
-OP('SUB'    , 0, 1, 0, 0b000, 0b01100, ALU_SUB  | REG_WE | FUNCT)
-OP('SLL'    , 0, 0, 0, 0b001, 0b01100, ALU_SHL  | REG_WE | SHIFT | FUNCT)
-OP('SLT'    , 0, 0, 0, 0b010, 0b01100, ALU_SLT  | REG_WE | FUNCT)
-OP('SLTU'   , 0, 0, 0, 0b011, 0b01100, ALU_SLTU | REG_WE | FUNCT)
-OP('XOR'    , 0, 0, 0, 0b100, 0b01100, ALU_XOR  | REG_WE | FUNCT)
-OP('SRL'    , 0, 0, 0, 0b101, 0b01100, ALU_SHR  | REG_WE | SHIFT | FUNCT)
-OP('SRA'    , 0, 1, 0, 0b101, 0b01100, ALU_SAR  | REG_WE | SHIFT | FUNCT)
-OP('OR'     , 0, 0, 0, 0b110, 0b01100, ALU_OR   | REG_WE | FUNCT)
-OP('AND'    , 0, 0, 0, 0b111, 0b01100, ALU_AND  | REG_WE | FUNCT)
-OP('FENCE'  , 0, X, X, 0b000, 0b00011, 0)
-OP('FENCE.I', 0, X, X, 0b001, 0b00011, 0)
-OP('SYSTEM' , 0, 0, X, 0b000, 0b11100, SYSTEM | HOLD)
-OP('SYSTEM' , 1, 0, X, 0b000, 0b11100, SYSTEM | HOLD)
 
+OP('ADDI'   , 0, X, X, 0b000, 0b00100, ALU_ADD    | REG_WE | OPIMM)
+OP('SLTI'   , 0, X, X, 0b010, 0b00100, ALU_SLT    | REG_WE | OPIMM)
+OP('SLTIU'  , 0, X, X, 0b011, 0b00100, ALU_SLTU   | REG_WE | OPIMM)
+OP('XORI'   , 0, X, X, 0b100, 0b00100, ALU_XOR    | REG_WE | OPIMM)
+OP('ORI'    , 0, X, X, 0b110, 0b00100, ALU_OR     | REG_WE | OPIMM)
+OP('ANDI'   , 0, X, X, 0b111, 0b00100, ALU_AND    | REG_WE | OPIMM)
+
+OP('SLLI'   , 0, 0, 0, 0b001, 0b00100, ALU_SHL    | REG_WE | OPIMM | SHIFT | FUNCT)
+OP('SRLI'   , 0, 0, 0, 0b101, 0b00100, ALU_SHR    | REG_WE | OPIMM | SHIFT | FUNCT)
+OP('SRAI'   , 0, 1, 0, 0b101, 0b00100, ALU_SAR    | REG_WE | OPIMM | SHIFT | FUNCT)
+
+OP('ADD'    , 0, 0, 0, 0b000, 0b01100, ALU_ADD    | REG_WE | FUNCT)
+OP('SUB'    , 0, 1, 0, 0b000, 0b01100, ALU_SUB    | REG_WE | FUNCT)
+OP('SLL'    , 0, 0, 0, 0b001, 0b01100, ALU_SHL    | REG_WE | SHIFT | FUNCT)
+OP('SLT'    , 0, 0, 0, 0b010, 0b01100, ALU_SLT    | REG_WE | FUNCT)
+OP('SLTU'   , 0, 0, 0, 0b011, 0b01100, ALU_SLTU   | REG_WE | FUNCT)
+OP('XOR'    , 0, 0, 0, 0b100, 0b01100, ALU_XOR    | REG_WE | FUNCT)
+OP('SRL'    , 0, 0, 0, 0b101, 0b01100, ALU_SHR    | REG_WE | SHIFT | FUNCT)
+OP('SRA'    , 0, 1, 0, 0b101, 0b01100, ALU_SAR    | REG_WE | SHIFT | FUNCT)
+OP('OR'     , 0, 0, 0, 0b110, 0b01100, ALU_OR     | REG_WE | FUNCT)
+OP('AND'    , 0, 0, 0, 0b111, 0b01100, ALU_AND    | REG_WE | FUNCT)
 OP('MUL'    , 0, 0, 1, 0b000, 0b01100, ALU_MUL    | REG_WE | FUNCT)
 OP('MULH'   , 0, 0, 1, 0b001, 0b01100, ALU_MULH   | REG_WE | FUNCT)
 OP('MULHU'  , 0, 0, 1, 0b011, 0b01100, ALU_MULHU  | REG_WE | FUNCT)
@@ -135,6 +137,10 @@ OP('DIVU'   , 0, 0, 1, 0b101, 0b01100, ALU_DIVU   | REG_WE | FUNCT)
 OP('REM'    , 0, 0, 1, 0b110, 0b01100, ALU_REM    | REG_WE | FUNCT)
 OP('REMU'   , 0, 0, 1, 0b111, 0b01100, ALU_REMU   | REG_WE | FUNCT)
 
+OP('FENCE'  , 0, X, X, 0b000, 0b00011, 0)
+OP('FENCE.I', 0, X, X, 0b001, 0b00011, 0)
+OP('SYSTEM' , X, 0, X, 0b000, 0b11100, SYSTEM | HOLD)
+
 OP('CSRRW'  , 0, X, X, 0b001, 0b11100, REG_WE | CSR_EN)
 OP('CSRRS'  , 0, X, X, 0b010, 0b11100, REG_WE | CSR_EN | CSR_BIT)
 OP('CSRRC'  , 0, X, X, 0b011, 0b11100, REG_WE | CSR_EN | CSR_BIT | CSR_CLR)
@@ -142,9 +148,38 @@ OP('CSRRWI' , 0, X, X, 0b101, 0b11100, REG_WE | CSR_EN | CSR_IMM)
 OP('CSRRSI' , 0, X, X, 0b110, 0b11100, REG_WE | CSR_EN | CSR_IMM | CSR_BIT)
 OP('CSRRCI' , 0, X, X, 0b111, 0b11100, REG_WE | CSR_EN | CSR_IMM | CSR_BIT | CSR_CLR)
 
+for i in range(len(microps)):
+    microps[i] ^= SIGILL
+
 for v in microps:
     bits <<= OUT_BITS
-    bits |= SIGILL if v == SIGILL else v ^ SHIFT
+    bits |= v
 
 with open('microps-logisim.bin', 'wb') as fp:
     fp.write(bits.to_bytes(ROM_SIZE * OUT_BITS // 8, 'big'))
+
+with open('insdec.logic', 'w') as fp:
+    print('Virtual instruction decoder.', file = fp)
+    print(file = fp)
+    print('device:', file = fp)
+    print('    instruction_decoder', file = fp)
+    print(file = fp)
+    print('pins:', file = fp)
+    print('    CTR P30 P25 P14 P13 P12 P6  P5  P4  P3  P2  P1  P0  _   _   _   _   _   _   _   _   _   _   _', file = fp)
+    print('    OP4 OP3 OP2 OP1 OP0 RWE REL OPI BR  LNK SX  LD0 LD1 ST0 ST1 CEN CSI BIT CLR BSH FN  SYS HLD VLD', file = fp)
+    print(file = fp)
+    print('table:', file = fp)
+    print('    CTR P30 P25 P14 P13 P12 P6  P5  P4  P3  P2  P1  P0 ', file = fp, end = '')
+    print(' |  OP4 OP3 OP2 OP1 OP0 RWE REL OPI BR  LNK SX  LD0 LD1 ST0 ST1 CEN CSI BIT CLR BSH FN  SYS HLD VLD', file = fp)
+    for i in range(len(microps)):
+        key = '   '.join('{0:013b}'.format(i))
+        val = '   '.join('1' if microps[i] & (1 << v) else '0' for v in range(OUT_BITS))
+        print('    %s   |  %s' % (key, val), file = fp)
+
+fpath = os.path.abspath(__file__)
+fname = os.path.join(os.path.dirname(fpath), '../../Tools/LogicGen/logen.py')
+
+subprocess.call([
+    fname,
+    os.path.join(os.path.dirname(fpath), 'insdec.logic')
+])

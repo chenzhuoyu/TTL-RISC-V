@@ -3,49 +3,34 @@
 
 """ Generates PLD functions from Truth-table for GAL devices """
 
+import io
 import os
 import sys
 import json
-import functools
-
-from sympy import core
-from sympy import logic
+import pickle
+import multiprocessing
 
 from typing import Dict
 from typing import List
 from typing import Tuple
 from typing import Union
 from typing import TextIO
-from typing import Optional
+
+from sympy import Xor, logic
+from sympy.core.symbol import Symbol
 
 from sympy.logic.boolalg import Or
 from sympy.logic.boolalg import And
 from sympy.logic.boolalg import Not
-
-from sympy.core.symbol import Symbol
 from sympy.logic.boolalg import Boolean
 
-class Expr:
-    op  : str
-    lhs : Union[str, 'Expr', Symbol]
-    rhs : Optional['Expr']
-
-    def __init__(self, lhs: Union[str, 'Expr'], op: str = '', rhs: Optional['Expr'] = None) -> None:
-        self.op  = op
-        self.lhs = lhs
-        self.rhs = rhs
-
-    def __str__(self) -> str:
-        if self.rhs is None:
-            return self.op + str(self.lhs)
-        else:
-            return '(%s %s %s)' % (self.lhs, self.op, self.rhs)
-
 class Device:
+    name: str
     kind: str
     pins: str
 
-    def __init__(self, kind: str, pins: str) -> None:
+    def __init__(self, name: str, kind: str, pins: str) -> None:
+        self.name = name
         self.kind = kind
         self.pins = pins
 
@@ -55,7 +40,7 @@ class Device:
             return json.load(fp)
 
 DEVICES = {
-    name: Device(dev['type'], dev['pins'])
+    name: Device(dev['name'], dev['type'], dev['pins'])
     for name, dev in Device.load_devices().items()
 }
 
@@ -77,10 +62,10 @@ def readline(ifp: TextIO) -> str:
 def dump_dnf(dnf: Boolean) -> str:
     if isinstance(dnf, Not):
         return '/' + dump_dnf(dnf.args[0])
-    elif isinstance(dnf, Or):
-        return ' + '.join(dump_dnf(v) for v in dnf.args)
     elif isinstance(dnf, And):
-        return ' * '.join(dump_dnf(v) for v in dnf.args)
+        return ' * '.join(sorted(dump_dnf(v) for v in dnf.args))
+    elif isinstance(dnf, Or):
+        return ' +\n       '.join(sorted(dump_dnf(v) for v in dnf.args))
     else:
         return str(dnf)
 
@@ -96,16 +81,16 @@ def parse_name(expr: str, i: int) -> Tuple[str, int]:
         i += 1
     return expr[p:i], i
 
-def parse_term(expr: str, row: int, i: int) -> Tuple[Expr, int]:
+def parse_term(expr: str, row: int, i: int) -> Tuple[list, int]:
     i = skip_space(expr, i)
     if i >= len(expr):
         raise SyntaxError('unexpected EOF at line %d' % (row + 1))
     elif expr[i] == '~':
         lhs, i = parse_term(expr, row, i + 1)
-        return Expr(lhs, '~'), i
+        return ['~', lhs], i
     elif expr[i].isidentifier():
         name, i = parse_name(expr, i)
-        return Expr(name), i
+        return ['', name], i
     elif expr[i] == '(':
         i = skip_space(expr, i + 1)
         ret, i = parse_expr(expr, row, i, 0)
@@ -119,19 +104,20 @@ def parse_term(expr: str, row: int, i: int) -> Tuple[Expr, int]:
     else:
         raise SyntaxError('invalid character at line %d, column %d' % (row + 1, i + 1))
 
-def parse_expr(expr: str, row: int, i: int, p: int) -> Tuple[Expr, int]:
+def parse_expr(expr: str, row: int, i: int, p: int) -> Tuple[list, int]:
     if p >= len(PRECEDENCE):
         return parse_term(expr, row, i)
     op = PRECEDENCE[p]
-    ret, i = parse_expr(expr, row, i, p + 1)
+    lhs, i = parse_expr(expr, row, i, p + 1)
     i = skip_space(expr, i)
+    ret = [op, lhs]
     while i < len(expr) and expr[i] == op:
         rhs, i = parse_expr(expr, row, i + 1, p + 1)
         i = skip_space(expr, i)
-        ret = Expr(ret, op, rhs)
+        ret.append(rhs)
     return ret, i
 
-def parse_logic(expr: str, row: int) -> Tuple[str, Expr]:
+def parse_logic(expr: str, row: int) -> Tuple[str, list]:
     i = skip_space(expr, 0)
     if i >= len(expr):
         raise SyntaxError('no logic expressions at line %d' % (row + 1))
@@ -162,36 +148,108 @@ def format_table(data: List[List[str]]) -> Tuple[List[int], List[str]]:
     wl = list(map(max, zip(*([len(v) for v in x] for x in data))))
     return wl, list('  '.join(v.ljust(n, ' ') for v, n in zip(x, wl)).strip() for x in data)
 
-def resolve_expr(defs: Dict[str, Union[Expr, Boolean]], expr: Expr, memo: Dict[str, Boolean]) -> Boolean:
-    if not expr.op:
-        name = expr.lhs
+def resolve_expr(
+    defs: Dict[str, Union[list, Boolean]],
+    name: str,
+    expr: list,
+    memo: Dict[str, Boolean],
+    prog: str,
+    path: str,
+) -> Boolean:
+    State.update_progress(prog, path)
+    def reduce_expr(ops):
+        return ops(*(
+            resolve_expr(defs, name, v, memo, prog, '%s[%d/%d]' % (path, i + 1, len(expr) - 1))
+            for (i, v) in enumerate(expr[1:])
+        ))
+    if not expr[0]:
+        name = expr[1]
         if name not in memo:
             memo[name] = None
-            memo[name] = resolve_value(defs, name, memo)
+            memo[name] = resolve_value(defs, name, memo, prog, path)
             return memo[name]
         elif memo[name] is None:
             raise SyntaxError('circular reference to variable "%s"' % name)
         else:
+            State.update_progress(prog, '%s > %s' % (path, name))
             return memo[name]
-    elif expr.op == '~':
-        return ~resolve_expr(defs, expr.lhs, memo)
-    elif expr.op == '&':
-        return resolve_expr(defs, expr.lhs, memo) & resolve_expr(defs, expr.rhs, memo)
-    elif expr.op == '|':
-        return resolve_expr(defs, expr.lhs, memo) | resolve_expr(defs, expr.rhs, memo)
-    elif expr.op == '^':
-        return resolve_expr(defs, expr.lhs, memo) ^ resolve_expr(defs, expr.rhs, memo)
+    elif expr[0] == '~':
+        return Not(resolve_expr(defs, name, expr[1], memo, prog, '%s > (invert)' % path))
+    elif expr[0] == '|':
+        return reduce_expr(Or)
+    elif expr[0] == '&':
+        return reduce_expr(And)
+    elif expr[0] == '^':
+        return reduce_expr(Xor)
     else:
-        raise RuntimeError('fatal: invalid expression (operator "%s"): %s' % (expr.op, expr))
+        raise RuntimeError('fatal: invalid expression (operator "%s"): %s' % (expr[0], expr))
 
-def resolve_value(defs: Dict[str, Union[Expr, Boolean]], name: str, memo: Dict[str, Boolean]) -> Boolean:
+def resolve_value(
+    defs: Dict[str, Union[list, Boolean]],
+    name: str,
+    memo: Dict[str, Boolean],
+    prog: str,
+    path: str,
+) -> Boolean:
     val = defs.get(name)
+    path = '%s > %s' % (path, name)
     if val is None:
         raise SyntaxError('unresolved reference to variable "%s"' % name)
     elif isinstance(val, Boolean):
+        State.update_progress(prog, path)
         return val
     else:
-        return resolve_expr(defs, val, memo)
+        return resolve_expr(defs, name, val, memo, prog, path)
+
+class State:
+    prog = {}
+    lock = multiprocessing.Lock()
+
+    @staticmethod
+    def init(keys: List[str]):
+        for key in keys:
+            if key in State.prog:
+                raise RuntimeError('duplicated name: ' + key)
+            State.prog[key] = len(State.prog)
+            sys.stderr.write('* Output %-4s : Waiting for execution ...\n' % key)
+        sys.stderr.write('\r\x1b[%dA' % len(keys))
+        sys.stderr.flush()
+
+    @staticmethod
+    def finish():
+        sys.stderr.write('\n' * len(State.prog))
+        sys.stderr.flush()
+
+    @staticmethod
+    def update_progress(key: str, status: str):
+        pos = State.prog[key]
+        State.lock.acquire()
+        sys.stderr.write('\r%s* Output %-4s : %s\x1b[K\r%s' % (
+            '' if pos == 0 else '\x1b[%dB' % pos,
+            key,
+            status,
+            '' if pos == 0 else '\x1b[%dA' % pos,
+        ))
+        State.lock.release()
+        sys.stderr.flush()
+
+def optimize_expr(args):
+    sys.setrecursionlimit(65536)
+    defs, State.prog, nopt, key = args
+    State.update_progress(key, 'Loading ...')
+    defs = pickle.loads(defs)
+    State.update_progress(key, 'Resolving ...')
+    expr = resolve_value(defs, key, {}, key, 'Resolving')
+    if key in nopt:
+        State.update_progress(key, 'Converting ...')
+        ret = logic.to_dnf(expr)
+    else:
+        State.update_progress(key, 'Optimizing ...')
+        ret = logic.to_dnf(expr, simplify = True, force = True)
+    State.update_progress(key, 'Generating ...')
+    dump = '%-4s = %s' % (key, dump_dnf(ret))
+    State.update_progress(key, 'Done')
+    return key, ret, dump
 
 def generate_from(ifp: TextIO, ofp: TextIO):
     row = 0
@@ -203,12 +261,12 @@ def generate_from(ifp: TextIO, ofp: TextIO):
         line = readline(ifp)
     if line != 'device:':
         raise SyntaxError('missing device declaration')
-    dev = readline(ifp).upper()
+    dev = readline(ifp)
     row += 1
     if dev not in DEVICES:
         raise SyntaxError('invalid device: ' + repr(dev))
     pdev = DEVICES[dev]
-    print(dev, file = ofp)
+    print(pdev.name, file = ofp)
     print(pdev.kind, file = ofp)
     print(file = ofp)
     row += 1
@@ -238,7 +296,7 @@ def generate_from(ifp: TextIO, ofp: TextIO):
         elif decl == 'G' and name != 'GND':
             raise SyntaxError('pin %d is a ground pin so it must have the name "GND"' % i)
         elif decl == 'i' and name != '_':
-            sym = core.symbols(name)
+            sym = Symbol(name)
             if sym in args:
                 raise SyntaxError('duplicated input pin ' + repr(name))
             else:
@@ -253,7 +311,12 @@ def generate_from(ifp: TextIO, ofp: TextIO):
     if not outs:
         raise SyntaxError('no output pins declared')
     row += 1
+    nopt = frozenset()
     line = readline(ifp)
+    if line == 'no-opt:':
+        line = readline(ifp)
+        nopt = frozenset(v.strip() for v in line.split(','))
+        line = readline(ifp)
     if line == 'define:':
         while True:
             try:
@@ -279,9 +342,9 @@ def generate_from(ifp: TextIO, ofp: TextIO):
                 raise SyntaxError('inconsistent input and output values')
             for i, (k, v) in enumerate(zip(var, vals)):
                 if v == '1':
-                    col[i].append(Expr(k))
+                    col[i].append(['', k])
                 elif v == '0':
-                    col[i].append(Expr(Expr(k), '~'))
+                    col[i].append(['~', ['', k]])
                 else:
                     raise SyntaxError('invalid logic bit ' + repr(v))
             for i, (k, v) in enumerate(zip(ret, rets)):
@@ -292,20 +355,17 @@ def generate_from(ifp: TextIO, ofp: TextIO):
                 else:
                     raise SyntaxError('invalid logic bit ' + repr(v))
         rows = [
-            functools.reduce(lambda a, b: Expr(a, '&', b), v)
+            ['&'] + list(v)
             for v in zip(*col)
         ]
         for i, row in enumerate(val):
             if ret[i] in defs and defs[ret[i]] is not None:
                 raise SyntaxError('logic function of output %s defined twice' % repr(ret[i]))
-            expr = None
-            for j, exp in enumerate(row):
-                if exp:
-                    if expr is None:
-                        expr = rows[j]
-                    else:
-                        expr = Expr(expr, '|', rows[j])
-            if expr is None:
+            expr = ['|']
+            for j, bitval in enumerate(row):
+                if bitval:
+                    expr.append(rows[j])
+            if len(expr) == 1:
                 raise SyntaxError('%s is always false' % ret[i])
             else:
                 defs[ret[i]] = expr
@@ -315,17 +375,20 @@ def generate_from(ifp: TextIO, ofp: TextIO):
         pass
     else:
         raise SyntaxError('junk after truth table')
-    memo = {}
-    exprs = {}
     for p in outs:
         if defs[p] is None:
             raise SyntaxError('undefined logic function of output ' + repr(p))
-        print('* Optimizing logic function for "%s" ...' % p, file = sys.stderr)
-        expr = resolve_value(defs, p, memo)
-        exprs[p] = logic.to_dnf(expr, simplify = True, force = True)
-        print('%s = %s' % (p, dump_dnf(exprs[p])), file = ofp)
+    exprs = {}
+    defsv = pickle.dumps(defs)
+    State.init(outs)
+    with multiprocessing.Pool() as mp:
+        req = zip([defsv] * len(outs), [State.prog] * len(outs), [nopt] * len(outs), outs)
+        for key, ret, expr in mp.map(optimize_expr, req):
+            exprs[key] = ret
+            print(expr, file = ofp)
     ands = 0
     terms = []
+    State.finish()
     for expr in exprs.values():
         if isinstance(expr, (And, Not, Symbol)):
             ands += 1
@@ -431,13 +494,20 @@ def main():
         return 1
     ifn = os.path.abspath(sys.argv[1])
     ofn = os.path.splitext(ifn)[0] + '.pld'
+    print('LogicGen v1.0', file = sys.stderr)
+    print('* Logic file  :', ifn, file = sys.stderr)
+    print('* PLD file    :', ofn, file = sys.stderr)
     with open(ifn) as ifp:
-        with open(ofn, 'w') as ofp:
-            try:
-                generate_from(ifp, ofp)
-            except SyntaxError as e:
-                print('* error: ' + str(e))
-                return 1
+        try:
+            ret = io.StringIO()
+            generate_from(ifp, ret)
+        except SyntaxError as e:
+            print('* error: ' + str(e))
+            return 1
+        else:
+            with open(ofn, 'w') as ofp:
+                ofp.write(ret.getvalue())
 
 if __name__ == '__main__':
+    sys.setrecursionlimit(65536)
     sys.exit(main())
