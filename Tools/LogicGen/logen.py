@@ -1,4 +1,4 @@
-#!/usr/bin/env pypy3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """ Generates PLD functions from Truth-table for GAL devices """
@@ -59,15 +59,21 @@ def readline(ifp: TextIO) -> str:
         if src and src[0] != '#':
             return src
 
-def dump_dnf(dnf: Boolean) -> str:
-    if isinstance(dnf, Not):
-        return '/' + dump_dnf(dnf.args[0])
-    elif isinstance(dnf, And):
-        return ' * '.join(sorted(dump_dnf(v) for v in dnf.args))
-    elif isinstance(dnf, Or):
-        return ' +\n       '.join(sorted(dump_dnf(v) for v in dnf.args))
+def dnf_key(dnf: str) -> str:
+    if dnf.startswith('/'):
+        return dnf_key(dnf[1:])
     else:
-        return str(dnf)
+        return dnf.strip()
+
+def dump_dnf(dnf: Boolean) -> str:
+    if isinstance(dnf, Or):
+        return ' +\n       '.join(dump_dnf(v) for v in dnf.args)
+    elif isinstance(dnf, And):
+        return ' * '.join(sorted((dump_dnf(v) for v in dnf.args), key = dnf_key))
+    elif isinstance(dnf, Not):
+        return '/' + str(dnf.args[0])
+    else:
+        return ' ' + str(dnf)
 
 def skip_space(expr: str, i: int) -> int:
     while i < len(expr) and expr[i].isspace():
@@ -85,6 +91,12 @@ def parse_term(expr: str, row: int, i: int) -> Tuple[list, int]:
     i = skip_space(expr, i)
     if i >= len(expr):
         raise SyntaxError('unexpected EOF at line %d' % (row + 1))
+    elif expr[i] == '1':
+        i = skip_space(expr, i + 1)
+        return ['@', True], i
+    elif expr[i] == '0':
+        i = skip_space(expr, i + 1)
+        return ['@', False], i
     elif expr[i] == '~':
         lhs, i = parse_term(expr, row, i + 1)
         return ['~', lhs], i
@@ -148,6 +160,12 @@ def format_table(data: List[List[str]]) -> Tuple[List[int], List[str]]:
     wl = list(map(max, zip(*([len(v) for v in x] for x in data))))
     return wl, list('  '.join(v.ljust(n, ' ') for v, n in zip(x, wl)).strip() for x in data)
 
+def clamp_path(p: str, s: str) -> str:
+    if len(p) + len(s) > 80:
+        return p + ' … ' + s[-75:].strip()
+    else:
+        return p + ' ' + s
+
 def resolve_expr(
     defs: Dict[str, Union[list, Boolean]],
     name: str,
@@ -156,7 +174,7 @@ def resolve_expr(
     prog: str,
     path: str,
 ) -> Boolean:
-    State.update_progress(prog, path)
+    State.update_progress(prog, clamp_path('Resolving', path))
     def reduce_expr(ops):
         return ops(*(
             resolve_expr(defs, name, v, memo, prog, '%s[%d/%d]' % (path, i + 1, len(expr) - 1))
@@ -171,8 +189,10 @@ def resolve_expr(
         elif memo[name] is None:
             raise SyntaxError('circular reference to variable "%s"' % name)
         else:
-            State.update_progress(prog, '%s > %s' % (path, name))
+            State.update_progress(prog, clamp_path('Resolving', '%s > %s' % (path, name)))
             return memo[name]
+    elif expr[0] == '@':
+        return expr[1]
     elif expr[0] == '~':
         return Not(resolve_expr(defs, name, expr[1], memo, prog, '%s > (invert)' % path))
     elif expr[0] == '|':
@@ -196,7 +216,7 @@ def resolve_value(
     if val is None:
         raise SyntaxError('unresolved reference to variable "%s"' % name)
     elif isinstance(val, Boolean):
-        State.update_progress(prog, path)
+        State.update_progress(prog, clamp_path('Resolving', path))
         return val
     else:
         return resolve_expr(defs, name, val, memo, prog, path)
@@ -217,21 +237,21 @@ class State:
 
     @staticmethod
     def finish():
-        sys.stderr.write('\n' * len(State.prog))
-        sys.stderr.flush()
+        with State.lock:
+            sys.stderr.write('\n' * len(State.prog))
+            sys.stderr.flush()
 
     @staticmethod
     def update_progress(key: str, status: str):
-        pos = State.prog[key]
-        State.lock.acquire()
-        sys.stderr.write('\r%s* Output %-4s : %s\x1b[K\r%s' % (
-            '' if pos == 0 else '\x1b[%dB' % pos,
-            key,
-            status,
-            '' if pos == 0 else '\x1b[%dA' % pos,
-        ))
-        State.lock.release()
-        sys.stderr.flush()
+        with State.lock:
+            pos = State.prog[key]
+            sys.stderr.write('\r%s* Output %-4s : %s\x1b[K\r%s' % (
+                '' if pos == 0 else '\x1b[%dB' % pos,
+                key,
+                status,
+                '' if pos == 0 else '\x1b[%dA' % pos,
+            ))
+            sys.stderr.flush()
 
 def optimize_expr(args):
     sys.setrecursionlimit(65536)
@@ -239,7 +259,7 @@ def optimize_expr(args):
     State.update_progress(key, 'Loading ...')
     defs = pickle.loads(defs)
     State.update_progress(key, 'Resolving ...')
-    expr = resolve_value(defs, key, {}, key, 'Resolving')
+    expr = resolve_value(defs, key, {}, key, '')
     if key in nopt:
         State.update_progress(key, 'Converting ...')
         ret = logic.to_dnf(expr)

@@ -14,6 +14,11 @@
         "type": "22V10",
         "pins": "GiiiiiiiiiiiiiiooooooooV"
     },
+    "GAL22V10_15_7": {
+        "name": "GAL22V10",
+        "type": "22V10",
+        "pins": "GiiiiiiiiiiiiiiioooooooV"
+    },
     "instruction_decoder": {
         "name": "virtual",
         "type": "virtual",
