@@ -7,15 +7,14 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
- 
-make: *** No rule to make target `all'.  Stop.
-
-# Make data base, printed on Sat Jul  9 15:43:09 2022
+# Make data base, printed on Mon Jul 25 20:15:38 2022
 
 # Variables
 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
+# environment
+PHANTOMJS_PLATFORM = darwin
 # automatic
 ?F = $(notdir $?)
 # automatic
@@ -43,11 +42,9 @@ VSCODE_CWD = /
 # environment
 GOPROXY = https://goproxy.cn,https://proxy.golang.org,direct
 # environment
-PATH = /Users/chenzhuoyu/.cargo/bin:/opt/homebrew/opt/openssl/bin:/opt/homebrew/opt/binutils/bin:/opt/homebrew/opt/llvm/bin:/Library/Java/JavaVirtualMachines/graalvm-ce-java17-22.1.0/Contents/Home/bin:/Users/chenzhuoyu/GolangProjects/bin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+PATH = /Users/chenzhuoyu/.cargo/bin:/opt/homebrew/opt/binutils/bin:/opt/homebrew/opt/llvm/bin:/Library/Java/JavaVirtualMachines/graalvm-ce-java17-22.1.0/Contents/Home/bin:/Users/chenzhuoyu/GolangProjects/bin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 # environment
 GOPATH = /Users/chenzhuoyu/GolangProjects
-# environment
-LaunchInstanceID = 4F3607F6-ABAB-4D05-BB09-DC42806BCB4B
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
@@ -55,7 +52,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 LS_COLORS = 
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.cpQ04KDdls/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.7IxzOjpffa/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -69,11 +66,11 @@ HOME = /Users/chenzhuoyu
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/chenzhuoyu/Library/Application Support/Code/CachedData/92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9
+VSCODE_CODE_CACHE_PATH = /Users/chenzhuoyu/Library/Application Support/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
 LOGNAME = chenzhuoyu
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -105,7 +102,7 @@ TMPDIR = /var/folders/0n/sb9ncst56wg857mxml1kwpwm0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/chenzhuoyu/Library/Application Support/Code/1.69.0-main.sock
+VSCODE_IPC_HOOK = /Users/chenzhuoyu/Library/Application Support/Code/1.69.2-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -115,7 +112,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.2347773.2347779
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.3074329.3074335
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
@@ -133,9 +130,9 @@ MAKEFILES :=
 # environment
 GOPRIVATE = *.byted.org
 # environment
-LC_ALL = C
+PHANTOMJS_ARCH = arm64
 # environment
-SECURITYSESSIONID = 186ae
+LC_ALL = C
 # automatic
 ^F = $(notdir $^)
 # default
@@ -147,9 +144,9 @@ LANG = C
 # environment
 LLVM_HOME = /opt/homebrew/opt/llvm
 # environment
-VSCODE_PID = 1835
+VSCODE_PID = 2444
 # variable set hash-table stats:
-# Load=67/1024=7%, Rehash=0, Collisions=1/87=1%
+# Load=67/1024=7%, Rehash=0, Collisions=2/87=2%
 
 # Pattern-specific Variable Values
 
@@ -157,7 +154,7 @@ VSCODE_PID = 1835
 
 # Directories
 
-# . (device 16777234, inode 780226): 13 files, no impossibilities.
+# . (device 16777231, inode 780226): 13 files, no impossibilities.
 
 # 13 files, no impossibilities in 1 directories.
 
@@ -231,6 +228,8 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Sat Jul  9 15:43:09 2022
+# Finished Make data base on Mon Jul 25 20:15:38 2022
 
  
+make: *** No rule to make target `all'.  Stop.
+

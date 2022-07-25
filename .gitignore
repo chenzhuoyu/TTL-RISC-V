@@ -1,4 +1,5 @@
 *.gbr
+*.gbrjob
 *.drl
 *.debug
 *.sch-bak
@@ -12,3 +13,4 @@ fp-info-cache
 *.jed
 *.elf
 *.o
+*-backups/

@@ -1,0 +1,12 @@
+[package]
+name = "pin-io"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bitvec              = "1.0"
+ftd2xx-embedded-hal = "0.9"
+ouroboros           = "0.15"
+
+[[bin]]
+name = "pinio"
